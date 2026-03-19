@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{css/index.css}">
+    <script th:src="@{js/script.js}"></script>
+    <title>Músicas e Álbuns</title>
+</head>
+<body>
+    <header>
+        <img th:src="@{img/logo-hybrid-theory.png}" class="img-logo" alt="Logo do álbum Hybrid Theory da banda de rock Linkin Park">
+        <h1>Músicas</h1>
+        <nav>
+            <ul>
+                <li><a th:href="@{/}" title="Página Inicial">Home</a></li>
+                <li><a th:href="@{integrantes_originais}" title="Integrantes Originais">Originais</a></li>
+                <li><a th:href="@{integrantes_atuais}" title="Integrantes Atuais">Atuais</a></li>
+                <li><a th:href="@{form_user}" title="Cadastro">Cadastro</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="content-musicas">
+            <h1>Músicas e Álbuns</h1>
+
+            <p>
+                Página a ser constrúida...
+            </p>
+
+            <p>
+                Aqui você poderá adicionar os álbuns e músicas que mais gosta!
+            </p>
+
+            <p>
+                Se cadastre <a th:href="@{form_user}">aqui</a> para poder criar suas listas de músicas e álbuns que mais gosta!
+            </p> 
+        </div>
+    </main>
+
+    <a href="#" class="btn-voltar-topo" title="Voltar ao topo" onclick="scrollToTop(event)">↑</a>
+
+    <footer>
+        <p>
+            Esse é um site para um projeto acadêmico da disciplina Desenvolvimento para Servidores II do curso de Sistemas para Internet da Fatec Rubens Lara, feito para praticar os aprendizados adquiridos ao longo do curso | Feito por: Kauê de Oliveira Martins
+        </p>
+    </footer>
+</body>
+</html>

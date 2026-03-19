@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS usuario(
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(320) NOT NULL,
+    senha VARCHAR(16) NOT NULL
+);

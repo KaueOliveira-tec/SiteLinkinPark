@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html">
+    <link rel="stylesheet" th:href="@{css/index.css}">
+    <link rel="stylesheet" th:href="@{css/form_style.css}">
+    <script th:src="@{js/script.js}"></script>
+    <title>Cadastro</title>
+</head>
+<body>
+    <header>
+        <img th:src="@{img/logo-hybrid-theory.png}" class="img-logo" alt="Logo do álbum Hybrid Theory da banda de rock Linkin Park">
+        <h1>Área de cadastro</h1>
+        <nav>
+            <ul>
+                <li><a th:href="@{/}" title="Página Inicial">Home</a></li>
+                <li><a th:href="@{integrantes_originais}" title="Integrantes Originais">Originais</a></li>
+                <li><a th:href="@{integrantes_atuais}" title="Integrantes Atuais">Atuais</a></li>
+                <li><a th:href="@{musicas}" title="Músicas">Músicas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+       <fieldset class="form-container">
+            <form class="form-content" action="#" th:action="@{/usuario}" method=post th:object="${usuario}">
+                <label for="nome" class="form-label">Nome:</label> 
+                <input type="text" id="nome" th:field="*{nome}" placeholder="Insira seu nome" required class="form-input">  
+
+                <label for="email" class="form-label">E-mail:</label> 
+                <input type="email" id="email" th:field="*{email}" placeholder="emailmaneiro@email.com" required class="form-input">
+
+                <label for="senha" class="form-label">Senha:</label>
+                <input type="password" id="senha" th:field="*{senha}" placeholder="Sua senha incrível" required class="form-input"> 
+                
+                <button type="submit" value="Cadastro" class="form-button">Cadastrar</button>
+            </form> 
+        </fieldset>
+    </main>
+
+    <footer>
+        <p>
+            Esse é um site para um projeto acadêmico da disciplina Desenvolvimento para Servidores II do curso de Sistemas para Internet da Fatec Rubens Lara, feito para praticar os aprendizados adquiridos ao longo do curso | Feito por: Kauê de Oliveira Martins
+        </p>
+    </footer>
+</body>
+</html>

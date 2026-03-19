@@ -1,0 +1,132 @@
+/* Estilos para o contêiner principal do formulário (fieldset) */
+.form-container {
+    background: rgba(255, 255, 255, 0.9); /* Fundo semi-transparente */
+    border: 2px solid #C4B5A6; /* Borda com cor do tema */
+    border-radius: 15px; /* Cantos arredondados */
+    padding: 40px; /* Espaçamento interno */
+    max-width: 550px; /* Largura máxima */
+    margin: 30px auto; /* Centraliza o formulário horizontalmente */
+    box-shadow: 0 8px 25px rgba(23, 17, 19, 0.15), 0 0 0 1px rgba(255,255,255,0.2); /* Sombra e borda interna */
+    backdrop-filter: blur(10px); /* Efeito de desfoque de fundo (glassmorphism) */
+    animation: slideIn 0.6s ease-out; /* Animação de entrada */
+    position: relative; /* Para posicionamento de elementos internos */
+    overflow: hidden; /* Garante que elementos internos não transbordem */
+}
+
+/* Detalhe decorativo na parte superior do formulário */
+.form-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #171113, #C4B5A6, #171113); /* Gradiente do tema */
+    border-radius: 15px 15px 0 0;
+}
+
+/* Animação de entrada para o formulário */
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Estilos para o formulário em si */
+.form-content {
+    display: flex; /* Layout flexível */
+    flex-direction: column; /* Itens em coluna */
+    gap: 25px; /* Espaçamento entre os itens */
+}
+
+/* Estilos para os rótulos dos campos */
+.form-label {
+    font-weight: 700; /* Negrito */
+    color: #171113; /* Cor do texto principal */
+    font-size: 1.1rem; /* Tamanho da fonte */
+    margin-bottom: 8px; /* Margem inferior */
+    display: block; /* Ocupa a largura total */
+    transition: color 0.3s ease; /* Transição suave para a cor */
+}
+
+/* Estilos para os campos de entrada de texto */
+.form-input {
+    padding: 12px 15px; /* Espaçamento interno */
+    border: 2px solid rgba(196, 181, 166, 0.5); /* Borda sutil */
+    border-radius: 10px; /* Cantos arredondados */
+    font-size: 1.1rem; /* Tamanho da fonte */
+    font-family: Arial, sans-serif; /* Fonte */
+    background: rgba(255, 255, 255, 0.95); /* Fundo quase branco */
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Transição suave */
+    width: 100%; /* Ocupa a largura total do pai */
+    box-sizing: border-box; /* Inclui padding e borda na largura */
+}
+
+/* Estilos para os campos de entrada quando em foco */
+.form-input:focus {
+    outline: none; /* Remove o contorno padrão */
+    border-color: #171113; /* Cor da borda ao focar */
+    background: rgba(255, 255, 255, 1); /* Fundo branco sólido */
+    box-shadow: 0 0 0 4px rgba(23, 17, 19, 0.15), 0 4px 20px rgba(196, 181, 166, 0.2); /* Sombra ao focar */
+    transform: scale(1.02); /* Leve aumento de escala */
+}
+
+/* Estilos para o botão de submissão */
+.form-button {
+    background: linear-gradient(135deg, #171113 0%, #1f1619 100%, #C4B5A6 100%); /* Gradiente do tema */
+    color: #e0e0e0; /* Cor do texto */
+    padding: 16px 35px; /* Espaçamento interno */
+    border: none; /* Sem borda */
+    border-radius: 10px; /* Cantos arredondados */
+    font-size: 1.1rem; /* Tamanho da fonte */
+    font-weight: 700; /* Negrito */
+    cursor: pointer; /* Cursor de ponteiro */
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Transição suave */
+    align-self: center; /* Centraliza o botão */
+    margin-top: 10px; /* Margem superior */
+    position: relative; /* Para pseudo-elemento */
+    overflow: hidden; /* Esconde o pseudo-elemento antes do hover */
+    text-transform: uppercase; /* Texto em maiúsculas */
+    letter-spacing: 1px; /* Espaçamento entre letras */
+}
+
+/* Pseudo-elemento para o efeito de hover do botão */
+.form-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3); /* Fundo semi-transparente */
+    border-radius: 50%; /* Forma circular */
+    transform: translate(-50%, -50%); /* Centraliza o círculo */
+    transition: width 0.6s, height 0.6s; /* Transição para o efeito de expansão */
+}
+
+/* Efeito de hover para o botão */
+.form-button:hover::before {
+    width: 300px; /* Expande o círculo */
+    height: 300px; /* Expande o círculo */
+}
+
+/* Estilos do botão ao passar o mouse */
+.form-button:hover {
+    background: linear-gradient(135deg, #C4B5A6 0%, #171113 50%, #1f1619 100%); /* Gradiente invertido */
+    color: #171113; /* Cor do texto */
+    transform: translateY(-4px); /* Leve elevação */
+    box-shadow: 0 8px 25px rgba(23, 17, 19, 0.4); /* Sombra mais proeminente */
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 30px 25px;
+        margin: 20px 15px;
+    }
+    
+    .form-input, .form-button {
+        font-size: 1rem;
+        padding: 14px 18px;
+    }
+}
+

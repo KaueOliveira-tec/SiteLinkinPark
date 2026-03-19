@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{css/index.css}">
+    <script th:src="@{js/script.js}"></script>
+    <title>Projeto de Desenvolvimento para Servidores II</title>
+</head>
+<body>
+    <header>
+        <img th:src="@{img/logo-hybrid-theory.png}" class="img-logo" alt="Logo do álbum Hybrid Theory da banda de rock Linkin Park">
+        <h1>Linkin Park: De Fã para Fã</h1>
+        <nav>
+            <ul>
+                <li><a th:href="@{musicas}" title="Músicas">Músicas</a></li>
+                <li><a th:href="@{integrantes_originais}" title="Integrantes Originais">Originais</a></li>
+                <li><a th:href="@{integrantes_atuais}" title="Integrantes Atuais">Atuais</a></li>
+                <li><a th:href="@{form_user}" title="Cadastro">Cadastro</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="content-home">
+            <h1>Um Pouco Sobre a Banda</h1>
+
+            <img th:src="@{img/elenco-atual-lp.jpg}" class="img-elenco-home" alt="Imagem da composição atual da banda de rock Linkin Park">
+
+            <p>
+                Linkin Park é uma banda de rock dos Estados Unidos formada em Agoura Hills, Califórnia. A formação atual do grupo inclui o vocalista e multi-instrumentista Mike Shinoda, o guitarrista Brad Delson, o baixista Dave Farrell, o DJ Joe Hahn, a vocalista Emily Armstrong e o baterista Colin Brittain. A formação da banda em seus sete primeiros álbuns de estúdio incluía o vocalista Chester Bennington e o baterista Rob Bourdon; após a morte de Bennington em julho de 2017, o grupo passou por um hiato de sete anos, período durante o qual Bourdon optou por deixar a banda. Em setembro de 2024, Linkin Park retornou as atividades com as adições de Armstrong e Brittain. Entre os ex-integrantes também estão o vocalista Mark Wakefield e o baixista Kyle Christner.
+            </p>
+                
+            <p>
+                Formado em 1996, Linkin Park alcançou fama internacional com o seu álbum de estreia, Hybrid Theory (2000), que foi certificado como diamante pela RIAA em 2005 e multi-platina em vários outros países, se tornando um dos álbuns mais vendidos de todos os tempos. Seu segundo álbum, Meteora (2003), continuou o sucesso da banda, liderando a parada de álbuns da Billboard 200 em 2003, e foi seguido por um extenso trabalho de caridades e de turnês em todo o mundo. Tendo adaptado o nu metal e rap metal para um estilo de rádio ainda que densamente dividido em seus dois primeiros álbuns, a banda explorou outros gêneros em seu terceiro álbum, Minutes to Midnight (2007). O álbum liderou as paradas da Billboard e teve a terceira melhor semana de estreia de qualquer álbum naquele ano.
+            </p>
+
+            <p>
+                A banda continuou a explorar uma variação mais ampla de tipos musicais em seu quarto álbum, A Thousand Suns (2010), dividindo sua música com sons mais eletrônicos. O quinto álbum da banda, Living Things (2012), combinou elementos musicais de todos os seus álbuns anteriores. Seu sexto álbum, The Hunting Party (2014), retornou a um som de rock mais pesado e seu sétimo álbum, One More Light (2017), foi um disco mais eletrônico e orientado para a música pop. O oitavo álbum de estúdio da banda, From Zero (2024), marcou um retorno às sonoridades originais do grupo, ao mesmo tempo em que incorporou elementos musicais presentes em todas as suas obras anteriores.
+            </p>
+
+            <p>
+                Linkin Park está entre as bandas mais bem-sucedidas do século XXI e de todos os tempos, tendo vendido mais de 100 milhões de álbuns em todo o mundo. Eles ganharam dois Grammy Awards, sete American Music Awards, quatro Billboard Music Awards, quatro MTV Video Music Awards, dez MTV Europe Music Awards e três World Music Awards. Em 2003, a MTV2 nomeou o Linkin Park como a sexta maior banda da era dos videoclipes e a terceira melhor do novo milênio. Em 2012, a banda foi votada como o maior artista dos anos 2000 em uma pesquisa realizada pela VH1. Em 2014, a banda foi declarada como "a maior banda de rock do mundo" pela Kerrang!.
+            </p>
+        </div>
+    </main>
+
+
+    <a href="#" class="btn-voltar-topo" title="Voltar ao topo" onclick="scrollToTop(event)">↑</a>
+
+    <footer>
+        <p>
+            Esse é um site para um projeto acadêmico da disciplina Desenvolvimento para Servidores II do curso de Sistemas para Internet da Fatec Rubens Lara, feito para praticar os aprendizados adquiridos ao longo do curso | Feito por: Kauê de Oliveira Martins
+        </p>
+    </footer>
+</body>
+</html>

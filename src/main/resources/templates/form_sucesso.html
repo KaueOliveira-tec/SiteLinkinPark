@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/form_style.css}">
+    <script th:src="@{/js/script.js}"></script>
+    <title>Cadastro Bem-sucedido</title>
+</head>
+<body>
+    <header>
+        <img th:src="@{/img/logo-hybrid-theory.png}" class="img-logo" alt="Logo do álbum Hybrid Theory da banda de rock Linkin Park">
+        <h1>Área de cadastro</h1>
+        <nav hidden>
+            <ul>
+                <li><a th:href="@{/}" title="Página Inicial">Home</a></li>
+                <li><a th:href="@{/integrantes_originais}" title="Integrantes Originais">Originais</a></li>
+                <li><a th:href="@{/integrantes_atuais}" title="Integrantes Atuais">Atuais</a></li>
+                <li><a th:href="@{/musicas}" title="Músicas">Músicas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="form-container" aria-labelledby="success-title" role="status">
+            <div class="form-content">
+                <header id="success-title">
+                    <h1>Cadastro realizado com sucesso!</h1>
+                </header>
+                <button onclick="window.location.href='/'" class="form-button" aria-label="Volter à página inicial">Retornar</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>
+            Esse é um site para um projeto acadêmico da disciplina Desenvolvimento para Servidores II do curso de Sistemas para Internet da Fatec Rubens Lara, feito para praticar os aprendizados adquiridos ao longo do curso | Feito por: Kauê de Oliveira Martins
+        </p>
+    </footer>
+</body>
+</html>
