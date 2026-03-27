@@ -34,7 +34,7 @@ header h1 {
     width: max-content;
 }
 
-/* Nav - Redesigned for full responsiveness while keeping visual identity */
+/* Nav */
 nav {
     position: absolute;
     left: 50%;
@@ -184,6 +184,90 @@ footer p {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
 }
 
+
+/* Estilos para a seção de perfil do usuário */
+ .profile-main-content {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.profile-main-content h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+.profile-details-section {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.profile-details-section h3 {
+    color: #555;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.profile-details-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+        display: inline-block; /* Para centralizar a lista */
+}
+
+.profile-details-section ul li {
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.profile-details-section ul li strong {
+    color: #333;
+    min-width: 100px; /* Garante alinhamento */
+    display: inline-block;
+}
+
+.no-profile-message {
+    padding: 2rem;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    margin-top: 1.5rem;
+}
+
+.no-profile-message h2 {
+    color: #e74c3c;
+}
+
+.no-profile-message p {
+    font-size: 1.1rem;
+}
+
+.no-profile-message a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.no-profile-message a:hover {
+    text-decoration: underline;
+}
+
+
+
+
+
+/* Versão para telas de tablets */
 @media (max-width: 768px) {
     header {
         flex-direction: column;
@@ -233,6 +317,8 @@ footer p {
     }
 }
 
+
+/* Versão para telas de celulares */
 @media (max-width: 480px) {
     nav ul {
         flex-direction: column;

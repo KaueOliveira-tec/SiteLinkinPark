@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.SiteLinkinPark.model.Usuario;
@@ -50,5 +51,15 @@ public class MenuController {
 		UsuarioService us = context.getBean(UsuarioService.class);
 		us.cadastroUsuario(usuario);
 		return "form_sucesso";
+	}
+
+    @GetMapping("/perfil/{uuid}")
+	public String verPerfil(@PathVariable String uuid, Model model){
+		UsuarioService us = context.getBean(UsuarioService.class);
+		Usuario usuario = us.selectUser(uuid);
+		model.addAttribute("nomeUsuario",usuario.getNome());
+        model.addAttribute("idUsuario",usuario.getId());
+		model.addAttribute("emailUsuario",usuario.getEmail());
+		return "perfil";
 	}
 }

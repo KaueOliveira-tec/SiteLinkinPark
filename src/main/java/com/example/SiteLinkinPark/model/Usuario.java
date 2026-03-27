@@ -1,5 +1,7 @@
 package com.example.SiteLinkinPark.model;
 
+import java.util.Map;
+import java.util.UUID;
 
 public class Usuario {
     private String id, nome, email, senha;
@@ -52,5 +54,12 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public static Usuario conversor(Map<String,Object> registro) {
+        String nome = (String) registro.get("nome");
+         UUID id = (UUID) registro.get("id");
+        String email = (String) registro.get("email");
+        return new Usuario(nome, email, id.toString());
     }
 }

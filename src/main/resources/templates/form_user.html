@@ -19,11 +19,14 @@
                 <li><a th:href="@{integrantes_originais}" title="Integrantes Originais">Originais</a></li>
                 <li><a th:href="@{integrantes_atuais}" title="Integrantes Atuais">Atuais</a></li>
                 <li><a th:href="@{musicas}" title="Músicas">Músicas</a></li>
+                <li><a th:href="@{perfil}" title="Perfil">Perfil</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
+        <p>Se já se cadastrou no site, <a th:href="@{perfil}" title="Perfil">clique aqui</a> para ver seu perfil</p>
+
        <fieldset class="form-container">
             <form class="form-content" action="#" th:action="@{/usuario}" method=post th:object="${usuario}">
                 <label for="nome" class="form-label">Nome:</label> 

@@ -13,4 +13,7 @@ public class UsuarioService {
         usuarioDAO.cadastroUsuario(usuario);
     }
 
+    public Usuario selectUser(String uuid){
+        return usuarioDAO.selectUser(uuid);
+    }
 }

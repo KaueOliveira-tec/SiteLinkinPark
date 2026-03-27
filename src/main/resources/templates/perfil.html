@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <script th:src="@{/js/script.js}"></script>
+    <title>Perfil do Usuário</title>
+</head>
+<body>
+    <header>
+        <img th:src="@{/img/logo-hybrid-theory.png}" class="img-logo" alt="Logo do álbum Hybrid Theory da banda de rock Linkin Park">
+        <h1>Perfil do Usuário</h1>
+        <nav aria-label="Navegação Principal">
+            <ul>
+                <li><a th:href="@{/}" title="Página Inicial">Home</a></li>
+                <li><a th:href="@{integrantes_originais}" title="Integrantes Originais">Originais</a></li>
+                <li><a th:href="@{integrantes_atuais}" title="Integrantes Atuais">Atuais</a></li>
+                <li><a th:href="@{musicas}" title="Músicas">Músicas</a></li>
+                <li><a th:href="@{form_user}" title="Cadastro">Cadastro</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="profile-main-content">
+        <article>
+            <div th:if="${nomeUsuario}">
+                <h2 th:text="'Bem-vindo(a) ao seu Perfil, ' + ${nomeUsuario} + '!'">Bem-vindo(a) ao seu Perfil!</h2>
+                
+                <section class="profile-details-section">
+                    <h3>Suas Informações</h3>
+                    <ul>
+                        <li><strong>Nome:</strong> <span th:text="${nomeUsuario}"></span></li>
+                        <li><strong>Email:</strong> <span th:text="${emailUsuario}"></span></li>
+                    </ul>
+                    <p>Seus dados foram carregados com sucesso.</p>
+                </section>
+            </div>
+            <!--
+            Futuro quadro de aviso de usuário não encontrado
+
+            <div th:unless="${nomeUsuario}" class="no-profile-message">
+                <h2>Acesso Negado</h2>
+                <p>Usuário não encontrado ou não logado. Por favor, <a th:href="@{/form_user}" title="Cadastro">faça seu cadastro</a> ou <a th:href="@{/login}" title="Login">faça login</a> para acessar seu perfil.</p>
+            </div> 
+            -->
+        </article>
+    </main>
+
+    <footer>
+        <p>
+            Esse é um site para um projeto acadêmico da disciplina Desenvolvimento para Servidores II do curso de Sistemas para Internet da Fatec Rubens Lara, feito para praticar os aprendizados adquiridos ao longo do curso | Feito por: Kauê de Oliveira Martins
+        </p>
+    </footer>
+</body>
+</html>

@@ -34,5 +34,8 @@ public class UsuarioDAO {
 		jdbc.update(sql, obj);
 	}
 
-
+	public Usuario selectUser(String uuid) {
+		String sql = "SELECT * FROM usuario WHERE id=?::uuid";
+		return Usuario.conversor(jdbc.queryForMap(sql,uuid));
+	}
 }
