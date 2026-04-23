@@ -20,9 +20,14 @@
                     <li class="dropdown">
                         <a href="javascript:void(0)" class="navbar__link">Minha Conta</a>
                         <div class="dropdown__content">
-                            <a th:href="@{/form_user}" class="dropdown__link">Cadastrar</a>
-                            <a th:href="@{/login}" class="dropdown__link">Fazer Login</a> 
-                            <a th:href="@{/perfil}" class="dropdown__link">Ver Perfil</a>
+                            <div th:if="${session.usuarioLogado == null}">
+                                <a th:href="@{/form_user}" class="dropdown__link">Cadastrar</a>
+                                <a th:href="@{/login}" class="dropdown__link">Fazer Login</a>
+                            </div>
+                            <div th:if="${session.usuarioLogado != null}">
+                                <a th:href="@{/perfil}" class="dropdown__link">Ver Perfil</a>
+                                <a th:href="@{/logout}" style="color: #ff4d4d;" class="dropdown__link">Sair</a>
+                            </div>
                         </div>
                     </li>
                 </ul>

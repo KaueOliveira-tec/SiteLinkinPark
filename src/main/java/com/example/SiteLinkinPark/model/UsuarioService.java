@@ -20,4 +20,8 @@ public class UsuarioService {
     public boolean atualizarUsuario(Usuario usuario, String emailAtual, String senhaAtual) {
         return usuarioDAO.atualizarUsuario(usuario, emailAtual, senhaAtual);
     }
+
+    public boolean excluirUsuario(String email, String senha) {
+        return usuarioDAO.excluirUsuario(email, senha);
+    }
 }

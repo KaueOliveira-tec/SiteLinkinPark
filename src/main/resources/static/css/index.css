@@ -106,23 +106,28 @@ h2{
 }
 
 .form-input {
-    padding: 12px 15px; /* Espaçamento interno */
+    padding: 14px 16px; /* Espaçamento interno */
     border: 2px solid rgba(196, 181, 166, 0.5); /* Borda sutil */
-    border-radius: 10px; /* Cantos arredondados */
-    font-size: 1.1rem; /* Tamanho da fonte */
+    border-radius: 14px; /* Cantos arredondados */
+    font-size: 1.05rem; /* Tamanho da fonte */
     font-family: Arial, sans-serif; /* Fonte */
-    background: rgba(255, 255, 255, 0.95); /* Fundo quase branco */
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Transição suave */
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(244, 238, 232, 0.95)); /* Fundo suave em degradê */
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease; /* Transição suave */
     width: 100%; /* Ocupa a largura total do pai */
     box-sizing: border-box; /* Inclui padding e borda na largura */
+    box-shadow: inset 0 2px 10px rgba(23, 17, 19, 0.05); /* Leve profundidade interna */
+}
+
+.form-input:hover {
+    border-color: rgba(23, 17, 19, 0.55);
 }
 
 .form-input:focus {
     outline: none; /* Remove o contorno padrão */
     border-color: #171113; /* Cor da borda ao focar */
     background: rgba(255, 255, 255, 1); /* Fundo branco sólido */
-    box-shadow: 0 0 0 4px rgba(23, 17, 19, 0.15), 0 4px 20px rgba(196, 181, 166, 0.2); /* Sombra ao focar */
-    transform: scale(1.02); /* Leve aumento de escala */
+    box-shadow: 0 0 0 4px rgba(196, 181, 166, 0.18), 0 4px 20px rgba(196, 181, 166, 0.2); /* Sombra ao focar */
+    transform: translateY(-1px); /* Leve elevação */
 }
 
 .form-button {
@@ -167,6 +172,49 @@ h2{
     transform: translateY(-4px); /* Leve elevação */
     box-shadow: 0 8px 25px rgba(23, 17, 19, 0.4); /* Sombra mais proeminente */
 }
+
+.form-button.danger-button {
+    background: linear-gradient(135deg, #8a1919 0%, #5c1010 45%, #171113 100%);
+    color: #f9f0ed;
+    border: 2px solid rgba(255, 77, 77, 0.35);
+}
+
+.form-button.danger-button:hover {
+    background: linear-gradient(135deg, #c14848 0%, #8a1919 50%, #171113 100%);
+    color: #ffffff;
+    box-shadow: 0 10px 28px rgba(145, 26, 26, 0.4);
+}
+
+/* Ajustes específicos de perfil */
+label[for="senhaExcluir"] {
+    display: block;
+    margin: 22px 0 8px;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: #171113;
+    letter-spacing: 0.3px;
+}
+
+.profile-actions .form-button,
+.profile-button-group .form-button,
+.form-container form .form-button.danger-button {
+    padding: 12px 28px;
+    font-size: 0.98rem;
+}
+
+.profile-actions .form-button {
+    min-width: 180px;
+}
+
+.profile-button-group .form-button {
+    padding: 10px 24px;
+}
+
+.profile-actions,
+.profile-button-group {
+    gap: 12px;
+}
+
 .profile-heading {
     color: #171113;
     text-align: center;
