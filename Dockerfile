@@ -9,5 +9,5 @@ RUN mvn -B package -DskipTests
 FROM eclipse-temurin:21-jre
 WORKDIR /app
 COPY --from=build /app/target/SiteLinkinPark-0.0.1-SNAPSHOT.jar app.jar
-EXPOSE 8081
+EXPOSE 8080
 ENTRYPOINT ["sh", "-c", "java -Dserver.port=${PORT:-8080} -jar /app/app.jar"]
