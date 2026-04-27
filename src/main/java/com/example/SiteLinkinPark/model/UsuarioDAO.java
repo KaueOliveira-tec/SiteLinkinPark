@@ -32,7 +32,7 @@ public class UsuarioDAO {
 		                 " VALUES (?,?,?,?)";
 			Object[] obj = new Object[4];
 			//primeiro ?
-			obj[0] = java.util.UUID.randomUUID();
+			obj[0] = java.util.UUID.randomUUID().toString();
 			//segundo ?
 			obj[1] = usuario.getNome();
 			//terceiro ?
