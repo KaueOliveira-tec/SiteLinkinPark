@@ -2,12 +2,12 @@ package com.example.SiteLinkinPark.model;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jakarta.annotation.PostConstruct;
 
@@ -28,15 +28,17 @@ public class UsuarioDAO {
 	
 	public void cadastroUsuario(Usuario usuario) {
 		try {
-			String sql = "INSERT INTO usuario(nome, email, senha)" +
-		                 " VALUES (?,?,?)";
-			Object[] obj = new Object[3];
+			String sql = "INSERT INTO usuario(id, nome, email, senha)" +
+		                 " VALUES (?,?,?,?)";
+			Object[] obj = new Object[4];
 			//primeiro ?
-			obj[0] = usuario.getNome();
+			obj[0] = java.util.UUID.randomUUID();
 			//segundo ?
-			obj[1] = usuario.getEmail();
+			obj[1] = usuario.getNome();
 			//terceiro ?
-			obj[2] = usuario.getSenha();
+			obj[2] = usuario.getEmail();
+			//quarto ?
+			obj[3] = usuario.getSenha();
 			jdbc.update(sql, obj);
 			logger.info("Usuário cadastrado com sucesso: {}", usuario.getEmail());
 		} catch (Exception e) {
