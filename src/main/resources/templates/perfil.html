@@ -45,7 +45,7 @@
                     <ul class="profile-details-list">
                         <li><strong>Nome:</strong> <span th:text="${nomeUsuario}"></span></li>
                         <li><strong>Email:</strong> <span th:text="${emailUsuario}"></span></li>
-                        <li class="profile-id-note">ID da conta: <span th:text="${uuid}"></span></li>
+                        <li class="profile-id-note">ID da conta: <span th:text="${session.usuarioLogado.id}"></span></li>
                     </ul>
                 </section>
                 <div class="profile-actions">

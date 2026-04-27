@@ -1,5 +1,7 @@
 package com.example.SiteLinkinPark.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,8 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.example.SiteLinkinPark.model.Usuario;
 import com.example.SiteLinkinPark.model.UsuarioService;
@@ -155,15 +155,6 @@ public class MenuController {
                                  Model model) {
         try {
             Usuario user = (Usuario) session.getAttribute("usuarioLogado");
-            if (user == null) {
-                logger.warn("Tentativa de exclusão sem usuário logado");
-                return "redirect:/login";
-            }
-
-            if (!user.getEmail().equals(email)) {
-                logger.warn("Tentativa de exclusão com email diferente: {} vs {}", user.getEmail(), email);
-                return "redirect:/login";
-            }
 
             logger.info("Iniciando exclusão de conta para: {}", email);
             boolean excluido = usuarioService.excluirUsuario(email, senha);
