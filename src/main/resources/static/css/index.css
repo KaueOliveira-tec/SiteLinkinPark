@@ -551,6 +551,32 @@ nav ul li {
     margin-bottom: 15px;
 }
 
+.album-select {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 18px;
+}
+
+.album-songs {
+    display: grid;
+    gap: 16px;
+}
+
+.album-article {
+    border: 1px solid #1711131f;
+    border-radius: 14px;
+    padding: 18px;
+    background: #ffffffd9;
+    box-shadow: 0 6px 18px #17111314;
+}
+
+.album-title {
+    margin: 0 0 14px;
+    font-size: 1.1rem;
+    color: #171113;
+    letter-spacing: 0.3px;
+}
+
 .musica-item {
     display: flex;
     align-items: center;

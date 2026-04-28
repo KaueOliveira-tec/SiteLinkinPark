@@ -59,35 +59,27 @@
                     <input type="text" id="nomePlaylist" name="nomePlaylist" placeholder="Minha playlist favorita" required class="form-input">
 
                     <div class="musicas-selecionaveis">
-                        <p>Escolha suas músicas:</p>
-                        <div class="album-article" th:each="albumEntry : ${musicasPorAlbum.entrySet()}">
-                            <h3 class="album-title" th:text="${albumEntry.key}">Álbum</h3>
-                            <div class="musica-item" th:each="musica : ${albumEntry.value}">
-                                <label>
-                                    <input type="checkbox" name="musicaIds" th:value="${musica.id}">
-                                    <span th:text="${musica.titulo}">Nome da música</span>
-                                </label>
+                        <p>Escolha um álbum:</p>
+                        <select id="albumSelect" class="album-select form-input" required>
+                            <option value="" disabled selected>Selecione um álbum</option>
+                            <option th:each="albumEntry : ${musicasPorAlbum.entrySet()}" th:value="${albumEntry.key}" th:text="${albumEntry.key}">Álbum</option>
+                        </select>
+
+                        <div class="album-songs">
+                            <div class="album-article" th:each="albumEntry : ${musicasPorAlbum.entrySet()}" th:data-album="${albumEntry.key}" hidden>
+                                <h3 class="album-title" th:text="${albumEntry.key}">Álbum</h3>
+                                <div class="musica-item" th:each="musica : ${albumEntry.value}">
+                                    <label>
+                                        <input type="checkbox" name="musicaIds" th:value="${musica.id}">
+                                        <span th:text="${musica.titulo}">Nome da música</span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <button type="submit" class="form-button">Salvar playlist</button>
                 </form>
-            </section>
-
-            <section class="content-section">
-                <h2>Músicas disponíveis</h2>
-                <div class="music-albums" th:each="albumEntry : ${musicasPorAlbum.entrySet()}">
-                    <article class="album-article">
-                        <h3 class="album-title" th:text="${albumEntry.key}">Álbum</h3>
-                        <ul>
-                            <li th:each="musica : ${albumEntry.value}">
-                                <span th:text="${musica.titulo}"></span>
-                                <span th:text="' - ' + musica.artista" class="musica-descricao"></span>
-                            </li>
-                        </ul>
-                    </article>
-                </div>
             </section>
         </div>
     </main>
