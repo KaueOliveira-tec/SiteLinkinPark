@@ -285,6 +285,14 @@ label[for="senhaExcluir"] {
     font-weight: bold;
     text-decoration: underline;
 }
+
+.login-success {
+    color: #28a745;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
 /* ===== BOTÃO VOLTAR AO TOPO ===== */
 .voltar--button {
     position: fixed;
@@ -519,4 +527,63 @@ nav ul li {
     border-radius: 10px;
     margin: 20px auto;
     display: block;
+}
+
+/* Estilos específicos para a página de músicas e playlists */
+.playlist-form {
+    background: #ffffffe6;
+    border: 2px solid #C4B5A6;
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 600px;
+    margin: 20px auto;
+    box-shadow: 0 8px 25px #ffb2cc26;
+    backdrop-filter: blur(10px);
+}
+
+.musicas-selecionaveis {
+    margin-top: 20px;
+}
+
+.musicas-selecionaveis p {
+    font-weight: bold;
+    color: #171113;
+    margin-bottom: 15px;
+}
+
+.musica-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #c4b5a61a;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.musica-item:hover {
+    background: #c4b5a633;
+}
+
+.musica-item label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    width: 100%;
+}
+
+.musica-item input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+}
+
+.musica-item span {
+    font-size: 1rem;
+    color: #171113;
+}
+
+.musica-descricao {
+    font-size: 0.9rem;
+    color: #666;
+    margin-left: 5px;
 }

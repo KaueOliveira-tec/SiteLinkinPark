@@ -16,7 +16,7 @@
             <nav class="navbar">
                 <ul class="navbar__list">
                     <li><a th:href="@{/}" title="Página Inicial" class="navbar__link">Home</a></li>
-                    <li><a th:href="@{/musicas}" title="Músicas" class="navbar__link">Músicas</a></li>
+                    <li><a th:if="${session.usuarioLogado != null}" th:href="@{musicas}" title="Músicas" class="navbar__link">Músicas</a></li>
                     <li><a th:href="@{/integrantes_originais}" title="Integrantes Originais" class="navbar__link">Originais</a></li>
                     <li><a th:href="@{/integrantes_atuais}" title="Integrantes Atuais" class="navbar__link">Atuais</a></li>
                     <li class="dropdown">

@@ -1,5 +1,7 @@
 package com.example.SiteLinkinPark.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.SiteLinkinPark.model.Musica;
+import com.example.SiteLinkinPark.model.MusicaService;
+import com.example.SiteLinkinPark.model.Playlist;
+import com.example.SiteLinkinPark.model.PlaylistService;
 import com.example.SiteLinkinPark.model.Usuario;
 import com.example.SiteLinkinPark.model.UsuarioService;
 
@@ -23,14 +29,49 @@ public class MenuController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private MusicaService musicaService;
+
+    @Autowired
+    private PlaylistService playlistService;
+
     @GetMapping("/")
     public String paginaPrincipal(){
         return "index";
     }
 
     @GetMapping("/musicas")
-    public String musica(){
+    public String musica(HttpSession session, Model model) {
+        List<Musica> musicas = musicaService.listarMusicas();
+        model.addAttribute("musicas", musicas);
+
+        Usuario user = (Usuario) session.getAttribute("usuarioLogado");
+        if (user != null) {
+            model.addAttribute("nomeUsuario", user.getNome());
+            model.addAttribute("emailUsuario", user.getEmail());
+        }
         return "musicas";
+    }
+
+    @PostMapping("/playlist")
+    public String criarPlaylist(@RequestParam String nomePlaylist,
+                                @RequestParam(required = false) List<String> musicaIds,
+                                HttpSession session,
+                                Model model) {
+        Usuario user = (Usuario) session.getAttribute("usuarioLogado");
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        if (musicaIds == null || musicaIds.isEmpty()) {
+            model.addAttribute("erro", "Escolha pelo menos uma música para criar a playlist.");
+            return musica(session, model);
+        }
+
+        Playlist playlist = new Playlist(user.getId(), nomePlaylist);
+        playlistService.criarPlaylist(playlist, musicaIds);
+        model.addAttribute("success", "Playlist criada com sucesso!");
+        return musica(session, model);
     }
 
     @GetMapping("/integrantes_originais")

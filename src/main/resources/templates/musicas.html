@@ -39,22 +39,54 @@
         <div class="content-musicas">
             <h1>Músicas e Álbuns</h1>
 
-            <section class="content-section">
-                <p>
-                    Página a ser construída...
-                </p>
-            </section>
+            <div th:if="${erro}" class="login-error">
+                <p th:text="${erro}"></p>
+            </div>
+            <div th:if="${success}" class="login-success">
+                <p th:text="${success}"></p>
+            </div>
 
             <section class="content-section">
                 <p>
-                    Aqui você poderá adicionar os álbuns e músicas que mais gosta!
+                    Aqui você poderá criar sua playlist com as músicas já cadastradas no banco.
                 </p>
             </section>
 
-            <section class="content-section">
+            <section class="content-section" th:if="${session.usuarioLogado == null}">
                 <p>
-                    Se cadastre <a th:href="@{form_user}">aqui</a> para poder criar suas listas de músicas e álbuns que mais gosta!
+                    Você precisa <a th:href="@{/login}">fazer login</a> ou <a th:href="@{/form_user}">cadastrar-se</a>
+                    para salvar suas playlists.
                 </p>
+            </section>
+
+            <section class="content-section" th:if="${session.usuarioLogado != null}">
+                <h2>Crie sua playlist</h2>
+                <form class="playlist-form" th:action="@{/playlist}" method="post">
+                    <label for="nomePlaylist" class="form-label">Nome da playlist:</label>
+                    <input type="text" id="nomePlaylist" name="nomePlaylist" placeholder="Minha playlist favorita" required class="form-input">
+
+                    <div class="musicas-selecionaveis">
+                        <p>Escolha as músicas que você mais gosta:</p>
+                        <div class="musica-item" th:each="musica : ${musicas}">
+                            <label>
+                                <input type="checkbox" name="musicaIds" th:value="${musica.id}">
+                                <span th:text="${musica.titulo} + ' — ' + musica.album + ' (' + musica.artista + ')'">Nome da música</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="form-button">Salvar playlist</button>
+                </form>
+            </section>
+
+            <section class="content-section">
+                <h2>Músicas disponíveis</h2>
+                <ul>
+                    <li th:each="musica : ${musicas}">
+                        <span th:text="${musica.titulo}"></span>
+                        <span th:text="' - ' + musica.album + ' (' + musica.artista + ')'" class="musica-descricao"></span>
+                    </li>
+                </ul>
             </section>
         </div>
     </main>

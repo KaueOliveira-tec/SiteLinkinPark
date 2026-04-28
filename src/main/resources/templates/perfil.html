@@ -17,7 +17,7 @@
                     <li><a th:href="@{/}" title="Página Inicial" class="navbar__link">Home</a></li>
                     <li><a th:href="@{integrantes_originais}" title="Integrantes Originais" class="navbar__link">Originais</a></li>
                     <li><a th:href="@{integrantes_atuais}" title="Integrantes Atuais" class="navbar__link">Atuais</a></li>
-                    <li><a th:href="@{musicas}" title="Músicas" class="navbar__link">Músicas</a></li>
+                    <li><a th:if="${session.usuarioLogado != null}" th:href="@{musicas}" title="Músicas" class="navbar__link">Músicas</a></li>
                     <li class="dropdown">
                         <a href="javascript:void(0)" class="navbar__link">Minha Conta</a>
                         <div class="dropdown__content">
@@ -45,7 +45,6 @@
                     <ul class="profile-details-list">
                         <li><strong>Nome:</strong> <span th:text="${nomeUsuario}"></span></li>
                         <li><strong>Email:</strong> <span th:text="${emailUsuario}"></span></li>
-                        <li class="profile-id-note">ID da conta: <span th:text="${session.usuarioLogado.id}"></span></li>
                     </ul>
                 </section>
                 <div class="profile-actions">
