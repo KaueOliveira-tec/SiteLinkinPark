@@ -1,36 +1,50 @@
 package com.example.SiteLinkinPark.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 public class Playlist implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String id;
-    private String usuarioId;
+    private UUID id;
+    private UUID usuarioId;
     private String nome;
 
     public Playlist() {
     }
 
-    public Playlist(String usuarioId, String nome) {
+    public Playlist(UUID usuarioId, String nome) {
         this.usuarioId = usuarioId;
         this.nome = nome;
     }
 
-    public String getId() {
+    public Playlist(String usuarioId, String nome) {
+        this.usuarioId = UUID.fromString(usuarioId);
+        this.nome = nome;
+    }
+
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public String getUsuarioId() {
+    public void setId(String id) {
+        this.id = UUID.fromString(id);
+    }
+
+    public UUID getUsuarioId() {
         return usuarioId;
     }
 
-    public void setUsuarioId(String usuarioId) {
+    public void setUsuarioId(UUID usuarioId) {
         this.usuarioId = usuarioId;
+    }
+
+    public void setUsuarioId(String usuarioId) {
+        this.usuarioId = UUID.fromString(usuarioId);
     }
 
     public String getNome() {

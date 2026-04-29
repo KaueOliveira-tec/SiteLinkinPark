@@ -30,7 +30,7 @@ public class PlaylistDAO {
 
     public void salvarPlaylist(Playlist playlist, List<String> musicaIds) {
         String sqlPlaylist = "INSERT INTO playlist(id, usuario_id, nome) VALUES (?,?,?)";
-        String playlistId = UUID.randomUUID().toString();
+        UUID playlistId = UUID.randomUUID();
         playlist.setId(playlistId);
 
         jdbc.update(sqlPlaylist, playlistId, playlist.getUsuarioId(), playlist.getNome());
@@ -38,7 +38,7 @@ public class PlaylistDAO {
 
         String sqlLink = "INSERT INTO playlist_musica(playlist_id, musica_id) VALUES (?,?)";
         for (String musicaId : musicaIds) {
-            jdbc.update(sqlLink, playlistId, musicaId);
+            jdbc.update(sqlLink, playlistId, UUID.fromString(musicaId));
             logger.debug("Adicionada música {} à playlist {}", musicaId, playlistId);
         }
     }
