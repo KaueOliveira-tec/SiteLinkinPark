@@ -68,7 +68,7 @@
             <section class="content-section">
                 <h3>Atualizar músicas da playlist</h3>
                 <form th:action="@{/playlist/{id}/atualizar(id=${playlist.id})}" method="post">
-                    <div class="musicas-selecionaveis">
+                    <div class="musicas-selecionaveis" id="form-atualizar-playlist">
                         <p>Selecione as músicas que devem permanecer na playlist:</p>
                         <select class="album-select form-input" required>
                             <option value="" disabled selected>Selecione um álbum</option>

@@ -14,22 +14,34 @@ function scrollToTop(event) {
  * Mostra apenas as músicas do álbum selecionado no formulário de playlist.
  */
 document.addEventListener('DOMContentLoaded', function () {
-    const albumSelects = document.querySelectorAll('.album-select');
-    if (!albumSelects.length) {
-        return;
-    }
-
-    albumSelects.forEach(select => {
-        const container = select.closest('.musicas-selecionaveis');
-        if (!container) return;
+    // Processar formulário de criação de playlist
+    const criarPlaylistContainer = document.getElementById('form-criar-playlist');
+    if (criarPlaylistContainer) {
+        const select = criarPlaylistContainer.querySelector('.album-select');
+        const articles = criarPlaylistContainer.querySelectorAll('.album-article');
         
-        const albumArticles = container.querySelectorAll('.album-article');
-        select.addEventListener('change', function () {
-            const selectedAlbum = this.value;
-            albumArticles.forEach(article => {
-                article.hidden = article.dataset.album !== selectedAlbum;
+        if (select && articles.length > 0) {
+            select.addEventListener('change', function () {
+                articles.forEach(article => {
+                    article.hidden = article.dataset.album !== this.value;
+                });
             });
-        });
-    });
+        }
+    }
+    
+    // Processar formulário de atualização de playlist
+    const atualizarPlaylistContainer = document.getElementById('form-atualizar-playlist');
+    if (atualizarPlaylistContainer) {
+        const select = atualizarPlaylistContainer.querySelector('.album-select');
+        const articles = atualizarPlaylistContainer.querySelectorAll('.album-article');
+        
+        if (select && articles.length > 0) {
+            select.addEventListener('change', function () {
+                articles.forEach(article => {
+                    article.hidden = article.dataset.album !== this.value;
+                });
+            });
+        }
+    }
 });
 
