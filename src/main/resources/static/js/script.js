@@ -14,17 +14,18 @@ function scrollToTop(event) {
  * Mostra apenas as músicas do álbum selecionado no formulário de playlist.
  */
 document.addEventListener('DOMContentLoaded', function () {
-    const albumSelect = document.getElementById('albumSelect');
-    if (!albumSelect) {
+    const albumSelects = document.querySelectorAll('.album-select');
+    if (!albumSelects.length) {
         return;
     }
 
-    const albumArticles = document.querySelectorAll('.album-article');
-
-    albumSelect.addEventListener('change', function () {
-        const selectedAlbum = this.value;
-        albumArticles.forEach(article => {
-            article.hidden = article.dataset.album !== selectedAlbum;
+    albumSelects.forEach(select => {
+        const albumArticles = select.closest('form')?.querySelectorAll('.album-article') || document.querySelectorAll('.album-article');
+        select.addEventListener('change', function () {
+            const selectedAlbum = this.value;
+            albumArticles.forEach(article => {
+                article.hidden = article.dataset.album !== selectedAlbum;
+            });
         });
     });
 });

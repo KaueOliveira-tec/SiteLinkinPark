@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/index.css}">
-    <script th:src="@{js/script.js}"></script>
+    <script th:src="@{/js/script.js}"></script>
     <title th:text="${playlist.nome}">Playlist</title>
 </head>
 <body>
     <header class="header">
-        <img th:src="@{img/logo-hybrid-theory.png}" class="header__logo" alt="Logo do álbum Hybrid Theory da banda de rock Linkin Park">
+        <img th:src="@{/img/logo-hybrid-theory.png}" class="header__logo" alt="Logo do álbum Hybrid Theory da banda de rock Linkin Park">
         <h1 class="header__title" th:text="${playlist.nome}">Playlist</h1>
         <div class="header-nav">
             <nav class="navbar">
@@ -70,7 +70,7 @@
                 <form th:action="@{/playlist/{id}/atualizar(id=${playlist.id})}" method="post">
                     <div class="musicas-selecionaveis">
                         <p>Selecione as músicas que devem permanecer na playlist:</p>
-                        <select id="albumSelect" class="album-select form-input" required>
+                        <select class="album-select form-input" required>
                             <option value="" disabled selected>Selecione um álbum</option>
                             <option th:each="albumEntry : ${musicasPorAlbum.entrySet()}" th:value="${albumEntry.key}" th:text="${albumEntry.key}">Álbum</option>
                         </select>
