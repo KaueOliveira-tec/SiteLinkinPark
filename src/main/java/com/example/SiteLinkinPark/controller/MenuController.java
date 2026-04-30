@@ -56,6 +56,7 @@ public class MenuController {
             musicasPorAlbum.computeIfAbsent(musica.getAlbum(), k -> new ArrayList<>()).add(musica);
         }
         model.addAttribute("musicasPorAlbum", musicasPorAlbum);
+        model.addAttribute("selectedIds", Collections.emptyList());
 
         Usuario user = (Usuario) session.getAttribute("usuarioLogado");
         if (user != null) {

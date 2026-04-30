@@ -74,7 +74,7 @@
                                 <div class="musica-item" th:each="musica : ${albumEntry.value}">
                                     <label>
                                         <input type="checkbox" name="musicaIds" th:value="${musica.id}"
-                                        th:checked="${selectedIds.contains(musica.id)}">
+                                        th:checked="${selectedIds != null and selectedIds.contains(musica.id)}">
                                         <span th:text="${musica.titulo}">Nome da música</span>
                                     </label>
                                 </div>
