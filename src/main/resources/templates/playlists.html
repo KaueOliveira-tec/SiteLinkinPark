@@ -48,11 +48,10 @@
                     <a th:href="@{/musicas}" class="form-button">Criar playlist</a>
                 </div>
                 <div th:if="${!playlists.empty}">
-                    <ul class="playlist-list">
+                    <ul>
                         <li th:each="playlist : ${playlists}">
-                            <div class="playlist-item">
-                                <span class="playlist-name" th:text="${playlist.nome}">Nome da playlist</span>
-                                <a th:href="@{/playlist/{id}(id=${playlist.id})}" class="form-button">Abrir</a>
+                            <div>
+                                <a th:href="@{/playlist/{id}(id=${playlist.id})}" th:text="${playlist.nome}" class="form-button">Nome da playlist</a>
                             </div>
                         </li>
                     </ul>

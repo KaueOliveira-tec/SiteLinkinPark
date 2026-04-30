@@ -45,7 +45,7 @@
             <div th:if="${success}" class="login-success">
                 <p th:text="${success}"></p>
             </div>
-            <div th:if="${session.usuarioLogado != null}" class="playlist-link">
+            <div th:if="${session.usuarioLogado != null}">
                 <a th:href="@{/playlists}" class="form-button">Ver minhas playlists</a>
             </div>
 
@@ -73,7 +73,8 @@
                                 <h3 class="album-title" th:text="${albumEntry.key}">Álbum</h3>
                                 <div class="musica-item" th:each="musica : ${albumEntry.value}">
                                     <label>
-                                        <input type="checkbox" name="musicaIds" th:value="${musica.id}">
+                                        <input type="checkbox" name="musicaIds" th:value="${musica.id}"
+                                        th:checked="${selectedIds.contains(musica.id)}">
                                         <span th:text="${musica.titulo}">Nome da música</span>
                                     </label>
                                 </div>

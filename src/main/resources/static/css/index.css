@@ -133,15 +133,15 @@ h2{
 .form-button {
     background: linear-gradient(135deg, #171113 0%, #1f1619 100%, #C4B5A6 100%); /* Gradiente do tema */
     color: #e0e0e0; /* Cor do texto */
-    padding: 16px 35px; /* Espaçamento interno */
+    padding: 12px 28px; /* Espaçamento interno */
     border: none; /* Sem borda */
     border-radius: 10px; /* Cantos arredondados */
-    font-size: 1.1rem; /* Tamanho da fonte */
+    font-size: 1rem; /* Tamanho da fonte */
     font-weight: 700; /* Negrito */
     cursor: pointer; /* Cursor de ponteiro */
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Transição suave */
     align-self: center; /* Centraliza o botão */
-    margin-top: 10px; /* Margem superior */
+    margin-top: 8px; /* Margem superior */
     position: relative; /* Para pseudo-elemento */
     overflow: hidden; /* Esconde o pseudo-elemento antes do hover */
     text-transform: uppercase; /* Texto em maiúsculas */
@@ -198,8 +198,8 @@ label[for="senhaExcluir"] {
 .profile-actions .form-button,
 .profile-button-group .form-button,
 .form-container form .form-button.danger-button {
-    padding: 12px 28px;
-    font-size: 0.98rem;
+    padding: 10px 24px;
+    font-size: 0.95rem;
 }
 
 .profile-actions .form-button {
