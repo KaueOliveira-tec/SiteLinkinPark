@@ -146,6 +146,8 @@ h2{
     overflow: hidden; 
     text-transform: uppercase;
     letter-spacing: 1px; 
+    display: inline-block;
+    text-decoration: none;
 }
 
 .form-button::before {
