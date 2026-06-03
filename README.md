@@ -1,47 +1,43 @@
 # SiteLinkinPark - Linkin Park: De Fã para Fã
 
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.3-green.svg)](https://spring.io/projects/spring-boot)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.4-green.svg)](https://spring.io/projects/spring-boot)
 
 ## Descrição
 
 Site acadêmico desenvolvido para a disciplina **Desenvolvimento para Servidores II** do curso **Sistemas para Internet** da **Fatec Rubens Lara**. 
 
-O projeto é um site de fãs para a banda **Linkin Park**, apresentando informações sobre a história da banda, integrantes originais e atuais, músicas/álbuns (em desenvolvimento) e um formulário de cadastro de usuários.
+O projeto é um site de fãs para a banda **Linkin Park**, apresentando informações sobre a história da banda, integrantes originais e atuais, biblioteca de músicas/álbuns, sistema de autenticação de usuários e playlists personalizadas.
 
 
 ## Funcionalidades
 - Página inicial com biografia da banda Linkin Park.
 - Páginas de integrantes originais e atuais.
-- Página de músicas e álbuns (placeholder para listas personalizadas).
-- Formulário de cadastro de usuário (salva via serviço JPA).
+- **Página de músicas e álbuns** com filtragem por álbum.
+- **Sistema de autenticação** com login e logout.
+- **Gerenciamento de conta**: cadastro, visualização de perfil, edição de dados e exclusão de conta.
+- **Playlists personalizadas**: criar, editar, visualizar e deletar playlists com seleção de múltiplas músicas.
+- **Sessão de usuário**: mantém dados do usuário logado na sessão.
 - Navegação responsiva com assets estáticos (CSS, JS, imagens).
-- Aba de perfil onde mostra os dados do usuário. Obs.: por enquanto tem que colocar o uuid na url para obter as informações.
 
 ## INSERTs de teste
-Nome: Teste1 / E-mail: meuemail_legal@email.com / Senha: 1234
-Nome: Teste2 / E-mail: algumemail_bacana@email.com / Senha: asdag efadf
 
-
-## UUIDs utilizados para teste 
-| ID                              |  Retorno
-| ac31f154-3602-4416-96c6-c7efd06091cb | Nome: Teste1 / E-mail: meuemail_legal@email.com |
-| 23747bb0-58bb-459a-957e-7a54647a604f | Nome: Teste2 / E-mail: algumemail_bacana@email.com |
+Usuários de teste podem ser criados através do formulário de cadastro em `/form_user`.
 
 
 ## Tech Stack
-- **Backend**: Spring Boot 4.0.3 (WebMVC, Data JDBC, JPA/Hibernate).
+- **Backend**: Spring Boot 4.0.4 (WebMVC, Data JDBC, JPA/Hibernate, Session JDBC, Validation, Security).
 - **Frontend**: Thymeleaf templates, CSS, JavaScript.
 - **Database**: PostgreSQL (JDBC driver).
 - **Build**: Maven (wrapper: mvnw).
-- **Java**: 25.
+- **Java**: 21.
 
 ## Pré-requisitos
-- **Java 25** instalado.
+- **Java 21** ou superior instalado.
 - **PostgreSQL** rodando em `localhost:5432` com:
   - Database: `nome que você deu ao seu banco de dados dentro do PostgreSQL`
   - Usuário: `postgres`
   - Senha: `senha que você usou para conectar o servidor do banco de dados dentro do PostgreSQL`
-- (O schema é criado automaticamente via `schema-postgresql.sql` e Hibernate `create-drop`).
+- (O schema é criado automaticamente via `schema-postgresql.sql` e Hibernate).
 
 ## Instalação e Execução
 1. Clone o repositório:
@@ -55,44 +51,70 @@ Nome: Teste2 / E-mail: algumemail_bacana@email.com / Senha: asdag efadf
 
 ## Estrutura do Projeto
 ```
-ProjetoSite/
+SiteLinkinPark/
 ├── pom.xml
 ├── src/
-   ├── main/
-   │   ├── java/com/example/SiteLinkinPark/
-   │   │   ├── controller/MenuController.java
-   │   │   └── model/(Usuario.java, UsuarioService.java)
-   │   └── resources/
-   │       ├── application.yaml
-   │       ├── schema-postgresql.sql
-   │       ├── static/(css/, img/, js/)
-   │       └── templates/(index.html, musicas.html, form_user.html, etc.)
-   └── test/
+│   ├── main/
+│   │   ├── java/com/example/SiteLinkinPark/
+│   │   │   ├── controller/
+│   │   │   │   ├── MenuController.java
+│   │   │   │   ├── UsuarioController.java
+│   │   │   │   ├── MusicaController.java
+│   │   │   │   └── PlaylistController.java
+│   │   │   ├── model/
+│   │   │   │   ├── Usuario.java
+│   │   │   │   ├── UsuarioDAO.java
+│   │   │   │   ├── UsuarioService.java
+│   │   │   │   ├── Musica.java
+│   │   │   │   ├── MusicaDAO.java
+│   │   │   │   ├── MusicaService.java
+│   │   │   │   ├── Playlist.java
+│   │   │   │   ├── PlaylistDAO.java
+│   │   │   │   └── PlaylistService.java
+│   │   │   └── config/
+│   │   └── resources/
+│   │       ├── application.yaml
+│   │       ├── schema-postgresql.sql
+│   │       ├── static/(css/, img/, js/)
+│   │       └── templates/(html templates)
+│   └── test/
 ```
 
 ## Rotas Principais
-| Rota                  | Descrição              |
-|-----------------------|------------------------|
-| `/`                   | Página inicial (biografia) |
-| `/musicas`            | Músicas e álbuns       |
-| `/integrantes_originais` | Integrantes originais |
-| `/integrantes_atuais` | Integrantes atuais     |
-| `/form_user` (GET)    | Formulário de cadastro |
-| `/usuario` (POST)     | Processa cadastro      |
-| `/perfil` (GET)     | Mostra os dados do usuário    |
+| Rota                  | Método | Descrição              |
+|-----------------------|--------|------------------------|
+| `/`                   | GET    | Página inicial (biografia) |
+| `/musicas`            | GET    | Músicas e álbuns       |
+| `/integrantes_originais` | GET | Integrantes originais |
+| `/integrantes_atuais` | GET    | Integrantes atuais     |
+| `/form_user`          | GET    | Formulário de cadastro |
+| `/usuario`            | POST   | Processa cadastro      |
+| `/login`              | GET    | Página de login        |
+| `/efetuarLogin`       | POST   | Autentica usuário      |
+| `/perfil`             | GET    | Perfil do usuário logado |
+| `/editar_usuario`     | GET    | Formulário de edição   |
+| `/usuario/atualizar`  | POST   | Atualiza dados do usuário |
+| `/usuario/excluir`    | POST   | Exclui conta do usuário |
+| `/logout`             | GET    | Encerra sessão         |
+| `/musicas`            | POST   | Cria playlist          |
+| `/playlists`          | GET    | Lista playlists do usuário |
+| `/playlist/{id}`      | GET    | Detalhes da playlist   |
+| `/playlist/{id}/atualizar` | POST | Atualiza playlist |
+| `/playlist/{id}/musica/{musicaId}/remover` | POST | Remove música da playlist |
+| `/playlist/{id}/deletar` | POST | Deleta playlist |
 
 ## Autor
 **Kauê de Oliveira Martins**  
 Projeto acadêmico - Fatec Rubens Lara.
 
 ## Próximos Passos
-- Implementar listas de músicas personalizadas por usuário.
-- CRUD completo para usuários/músicas.
-- Deploy.
-- Autenticação/segurança.
-- Melhorias visuais e testes.
-- Fazer uma aba de login.
-- Fazer um menu para cadastro, perfil e login.
+- Melhorias na interface de usuário (UI/UX refinement).
+- Adicionar funcionalidades de busca e recomendação de músicas.
+- Implementar compartilhamento de playlists entre usuários.
+- Adicionar sistema de avaliação/rating de músicas.
+- Testes automatizados (unit e integração).
+- Melhorias de segurança (senhas hash, proteção contra ataques).
+- Deploy em ambiente de produção.
 
 ## Licença
 Projeto acadêmico - sem licença comercial.

@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import com.example.SiteLinkinPark.model.Usuario;
 import com.example.SiteLinkinPark.model.UsuarioService;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 public class UsuarioController {
@@ -30,7 +32,12 @@ public class UsuarioController {
     }
 
     @PostMapping("/usuario")
-    public String cadastrarUsuario(@ModelAttribute Usuario usuario, Model model) {
+    public String cadastrarUsuario(@Valid @ModelAttribute Usuario usuario, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("usuario", usuario);
+            return "form_user";
+        }
+
         try {
             logger.info("Cadastrando novo usuário com email: {}", usuario.getEmail());
             usuarioService.cadastroUsuario(usuario);
@@ -38,7 +45,7 @@ public class UsuarioController {
             return "form_sucesso";
         } catch (Exception e) {
             logger.error("Erro ao cadastrar usuário com email: {}", usuario.getEmail(), e);
-            model.addAttribute("erro", "Erro ao cadastrar usuário. Tente novamente.");
+            model.addAttribute("erro", e.getMessage());
             model.addAttribute("usuario", usuario);
             return "form_user";
         }
@@ -56,7 +63,7 @@ public class UsuarioController {
                                Model model) {
         try {
             logger.info("Tentativa de login com email: {}", email);
-Usuario user = usuarioService.autenticarUsuario(email, senha);
+            Usuario user = usuarioService.autenticarUsuario(email, senha);
 
             if (user != null) {
                 logger.info("Login bem-sucedido para usuário: {}", email);
@@ -99,11 +106,17 @@ Usuario user = usuarioService.autenticarUsuario(email, senha);
     }
 
     @PostMapping("/usuario/atualizar")
-    public String atualizarUsuario(@ModelAttribute Usuario usuario,
+    public String atualizarUsuario(@Valid @ModelAttribute Usuario usuario,
+                                   BindingResult bindingResult,
                                    @RequestParam String emailAtual,
                                    @RequestParam String senhaAtual,
                                    HttpSession session,
                                    Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("usuario", usuario);
+            return "editar_usuario";
+        }
+
         try {
             logger.info("Atualizando usuário com email: {}", emailAtual);
             boolean atualizado = usuarioService.atualizarUsuario(usuario, emailAtual, senhaAtual);
@@ -118,7 +131,7 @@ Usuario user = usuarioService.autenticarUsuario(email, senha);
             return "editar_usuario";
         } catch (Exception e) {
             logger.error("Erro ao atualizar usuário: {}", emailAtual, e);
-            model.addAttribute("erro", "Erro ao processar a atualização. Tente novamente.");
+            model.addAttribute("erro", e.getMessage());
             model.addAttribute("usuario", usuario);
             return "editar_usuario";
         }

@@ -6,12 +6,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class Playlist implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private UUID id;
     private UUID usuarioId;
+
+    @NotBlank(message = "Nome da playlist é obrigatório")
+    @Size(min = 1, max = 200, message = "Nome deve ter entre 1 e 200 caracteres")
     private String nome;
+
     private List<Musica> musicas = new ArrayList<>();
 
     public Playlist() {

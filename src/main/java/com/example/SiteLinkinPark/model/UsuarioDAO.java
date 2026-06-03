@@ -48,7 +48,7 @@ public class UsuarioDAO {
 	}
 
 	public Usuario verificarLogin(String email, String senha) {
-        String sql = "SELECT * FROM usuario WHERE email = ? AND senha = ?";
+        String sql = "SELECT * FROM usuario WHERE LOWER(email) = LOWER(?) AND senha = ?";
         try {
             return Usuario.conversor(jdbc.queryForMap(sql, email, senha));
         } catch (EmptyResultDataAccessException e) {
@@ -81,6 +81,19 @@ public class UsuarioDAO {
 		} catch (Exception e) {
 			logger.error("Erro ao deletar usuário: {}", email, e);
 			return false;
+		}
+	}
+
+	public Usuario buscarPorEmail(String email) {
+		String sql = "SELECT * FROM usuario WHERE LOWER(email) = LOWER(?)";
+		try {
+			return Usuario.conversor(jdbc.queryForMap(sql, email));
+		} catch (EmptyResultDataAccessException e) {
+			logger.info("Nenhum usuário encontrado com email: {}", email);
+			return null;
+		} catch (Exception e) {
+			logger.error("Erro ao buscar usuário por email: {}. Erro: {}", email, e.getMessage(), e);
+			return null;
 		}
 	}
 }

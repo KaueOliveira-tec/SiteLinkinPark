@@ -31,6 +31,16 @@ public class PlaylistDAO {
     }
 
     public void salvarPlaylist(Playlist playlist, List<String> musicaIds) {
+        Integer count = jdbc.queryForObject("SELECT COUNT(*) FROM playlist WHERE usuario_id = ?", Integer.class, playlist.getUsuarioId());
+        if (count != null && count >= 50) {
+            throw new RuntimeException("Você atingiu o limite máximo de 50 playlists");
+        }
+
+        Integer nomeCount = jdbc.queryForObject("SELECT COUNT(*) FROM playlist WHERE usuario_id = ? AND LOWER(nome) = LOWER(?)", Integer.class, playlist.getUsuarioId(), playlist.getNome());
+        if (nomeCount != null && nomeCount > 0) {
+            throw new RuntimeException("Você já possui uma playlist com este nome");
+        }
+
         String sqlPlaylist = "INSERT INTO playlist(id, usuario_id, nome) VALUES (?,?,?)";
         UUID playlistId = UUID.randomUUID();
         playlist.setId(playlistId);
@@ -79,6 +89,14 @@ public class PlaylistDAO {
     }
 
     public void atualizarPlaylistMusicas(UUID playlistId, List<String> musicaIds) {
+        if (musicaIds != null && musicaIds.size() > 500) {
+            throw new RuntimeException("Uma playlist pode conter no máximo 500 músicas");
+        }
+
+        if (musicaIds != null && musicaIds.size() != musicaIds.stream().distinct().count()) {
+            throw new RuntimeException("Não é permitido adicionar a mesma música mais de uma vez na playlist");
+        }
+
         String sqlDelete = "DELETE FROM playlist_musica WHERE playlist_id = ?";
         jdbc.update(sqlDelete, playlistId);
 

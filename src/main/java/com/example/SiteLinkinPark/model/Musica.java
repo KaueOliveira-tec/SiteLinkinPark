@@ -3,12 +3,23 @@ package com.example.SiteLinkinPark.model;
 import java.io.Serializable;
 import java.util.Map;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class Musica implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String id;
+
+    @NotBlank(message = "Título da música é obrigatório")
+    @Size(min = 1, max = 200, message = "Título deve ter entre 1 e 200 caracteres")
     private String titulo;
+
+    @Size(max = 200, message = "Álbum deve ter no máximo 200 caracteres")
     private String album;
+
+    @NotBlank(message = "Artista é obrigatório")
+    @Size(min = 1, max = 200, message = "Artista deve ter entre 1 e 200 caracteres")
     private String artista;
 
     public Musica() {

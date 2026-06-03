@@ -3,9 +3,27 @@ package com.example.SiteLinkinPark.model;
 import java.io.Serializable;
 import java.util.Map;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+import com.example.SiteLinkinPark.config.ValidPassword;
+
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
-    private String id, nome, email, senha;
+    private String id;
+
+    @NotBlank(message = "Nome é obrigatório")
+    @Size(min = 3, max = 100, message = "Nome deve ter entre 3 e 100 caracteres")
+    private String nome;
+
+    @NotBlank(message = "Email é obrigatório")
+    @Email(message = "Email deve ser válido")
+    private String email;
+
+    @NotBlank(message = "Senha é obrigatória")
+    @ValidPassword
+    private String senha;
 
     //Construtor para o formulario
     public Usuario() {
