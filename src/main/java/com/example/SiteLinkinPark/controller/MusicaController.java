@@ -1,5 +1,6 @@
 package com.example.SiteLinkinPark.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -14,8 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.example.SiteLinkinPark.model.Musica;
 import com.example.SiteLinkinPark.model.MusicaService;
 import com.example.SiteLinkinPark.model.Usuario;
-
-import jakarta.servlet.http.HttpSession;
+import com.example.SiteLinkinPark.model.UsuarioDAO;
 
 @Controller
 public class MusicaController {
@@ -23,8 +23,11 @@ public class MusicaController {
     @Autowired
     private MusicaService musicaService;
 
+    @Autowired
+    private UsuarioDAO usuarioDAO;
+
     @GetMapping("/musicas")
-    public String listarMusicas(HttpSession session, Model model) {
+    public String listarMusicas(Principal principal, Model model) {
         List<Musica> musicas = musicaService.listarMusicas();
         Map<String, List<Musica>> musicasPorAlbum = new LinkedHashMap<>();
         for (Musica musica : musicas) {
@@ -33,10 +36,12 @@ public class MusicaController {
         model.addAttribute("musicasPorAlbum", musicasPorAlbum);
         model.addAttribute("selectedIds", Collections.emptyList());
 
-        Usuario user = (Usuario) session.getAttribute("usuarioLogado");
-        if (user != null) {
-            model.addAttribute("nomeUsuario", user.getNome());
-            model.addAttribute("emailUsuario", user.getEmail());
+        if (principal != null) {
+            Usuario user = usuarioDAO.buscarPorEmail(principal.getName());
+            if (user != null) {
+                model.addAttribute("nomeUsuario", user.getNome());
+                model.addAttribute("emailUsuario", user.getEmail());
+            }
         }
         return "musicas";
     }

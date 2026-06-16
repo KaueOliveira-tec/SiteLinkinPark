@@ -37,19 +37,26 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/", "/index", "/sobre", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/", "/index", "/sobre", "/css/**", "/js/**", "/img/**").permitAll()
+                .requestMatchers("/form_user", "/usuario", "/form_sucesso").permitAll()
+                .requestMatchers("/integrantes_originais", "/integrantes_atuais").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/musicas/**", "/playlists/**").authenticated()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
                 .loginPage("/login")
-                .permitAll()
+                .loginProcessingUrl("/efetuarLogin")
+                .usernameParameter("email")
+                .passwordParameter("senha")
                 .defaultSuccessUrl("/", true)
+                .failureUrl("/login?erro=true")
+                .permitAll()
             )
             .logout(logout -> logout
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/")
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true)
                 .permitAll()
             )
             .csrf(csrf -> csrf.disable());

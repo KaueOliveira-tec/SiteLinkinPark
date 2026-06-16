@@ -1,5 +1,6 @@
 package com.example.SiteLinkinPark.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -22,8 +23,7 @@ import com.example.SiteLinkinPark.model.MusicaService;
 import com.example.SiteLinkinPark.model.Playlist;
 import com.example.SiteLinkinPark.model.PlaylistService;
 import com.example.SiteLinkinPark.model.Usuario;
-
-import jakarta.servlet.http.HttpSession;
+import com.example.SiteLinkinPark.model.UsuarioDAO;
 
 @Controller
 public class PlaylistController {
@@ -34,20 +34,23 @@ public class PlaylistController {
     @Autowired
     private PlaylistService playlistService;
 
+    @Autowired
+    private UsuarioDAO usuarioDAO;
+
     @PostMapping("/playlist")
     public String criarPlaylist(@RequestParam String nomePlaylist,
                                 @RequestParam(required = false) List<String> musicaIds,
-                                HttpSession session,
+                                Principal principal,
                                 Model model,
                                 RedirectAttributes redirectAttributes) {
-        Usuario user = (Usuario) session.getAttribute("usuarioLogado");
+        Usuario user = getUsuarioLogado(principal);
         if (user == null) {
             return "redirect:/login";
         }
 
         if (musicaIds == null || musicaIds.isEmpty()) {
             model.addAttribute("erro", "Escolha pelo menos uma música para criar a playlist.");
-            return prepararPaginaMusicas(session, model);
+            return prepararPaginaMusicas(principal, model);
         }
 
         Playlist playlist = new Playlist(user.getId(), nomePlaylist);
@@ -57,8 +60,8 @@ public class PlaylistController {
     }
 
     @GetMapping("/playlists")
-    public String minhasPlaylists(HttpSession session, Model model) {
-        Usuario user = (Usuario) session.getAttribute("usuarioLogado");
+    public String minhasPlaylists(Principal principal, Model model) {
+        Usuario user = getUsuarioLogado(principal);
         if (user == null) {
             return "redirect:/login";
         }
@@ -69,8 +72,8 @@ public class PlaylistController {
     }
 
     @GetMapping("/playlist/{playlistId}")
-    public String verPlaylist(@PathVariable String playlistId, HttpSession session, Model model) {
-        Usuario user = (Usuario) session.getAttribute("usuarioLogado");
+    public String verPlaylist(@PathVariable String playlistId, Principal principal, Model model) {
+        Usuario user = getUsuarioLogado(principal);
         if (user == null) {
             return "redirect:/login";
         }
@@ -100,9 +103,9 @@ public class PlaylistController {
     @PostMapping("/playlist/{playlistId}/atualizar")
     public String atualizarPlaylist(@PathVariable String playlistId,
                                    @RequestParam(required = false) List<String> musicaIds,
-                                   HttpSession session,
+                                   Principal principal,
                                    RedirectAttributes redirectAttributes) {
-        Usuario user = (Usuario) session.getAttribute("usuarioLogado");
+        Usuario user = getUsuarioLogado(principal);
         if (user == null) {
             return "redirect:/login";
         }
@@ -115,9 +118,9 @@ public class PlaylistController {
     @PostMapping("/playlist/{playlistId}/musica/{musicaId}/remover")
     public String removerMusica(@PathVariable String playlistId,
                                 @PathVariable String musicaId,
-                                HttpSession session,
+                                Principal principal,
                                 RedirectAttributes redirectAttributes) {
-        Usuario user = (Usuario) session.getAttribute("usuarioLogado");
+        Usuario user = getUsuarioLogado(principal);
         if (user == null) {
             return "redirect:/login";
         }
@@ -129,9 +132,9 @@ public class PlaylistController {
 
     @PostMapping("/playlist/{playlistId}/deletar")
     public String deletarPlaylist(@PathVariable String playlistId,
-                                  HttpSession session,
+                                  Principal principal,
                                   RedirectAttributes redirectAttributes) {
-        Usuario user = (Usuario) session.getAttribute("usuarioLogado");
+        Usuario user = getUsuarioLogado(principal);
         if (user == null) {
             return "redirect:/login";
         }
@@ -141,7 +144,14 @@ public class PlaylistController {
         return "redirect:/playlists";
     }
 
-    private String prepararPaginaMusicas(HttpSession session, Model model) {
+    private Usuario getUsuarioLogado(Principal principal) {
+        if (principal == null) {
+            return null;
+        }
+        return usuarioDAO.buscarPorEmail(principal.getName());
+    }
+
+    private String prepararPaginaMusicas(Principal principal, Model model) {
         List<Musica> musicas = musicaService.listarMusicas();
         Map<String, List<Musica>> musicasPorAlbum = new LinkedHashMap<>();
         for (Musica musica : musicas) {
@@ -150,7 +160,7 @@ public class PlaylistController {
         model.addAttribute("musicasPorAlbum", musicasPorAlbum);
         model.addAttribute("selectedIds", Collections.emptyList());
 
-        Usuario user = (Usuario) session.getAttribute("usuarioLogado");
+        Usuario user = getUsuarioLogado(principal);
         if (user != null) {
             model.addAttribute("nomeUsuario", user.getNome());
             model.addAttribute("emailUsuario", user.getEmail());
