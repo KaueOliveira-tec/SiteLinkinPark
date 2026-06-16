@@ -40,7 +40,7 @@
         <p>Se já se cadastrou no site, <a th:href="@{/login}" title="Login">clique aqui</a> para fazer login</p>
 
        <fieldset class="form-container">
-            <form class="form-content" action="#" th:action="@{/usuario}" method="post" th:object="${usuario}">
+            <form class="form-content" action="#" th:action="@{/usuario}" th:object="${usuario}" method="post">
                 <label for="nome" class="form-label">Nome:</label> 
                 <input type="text" id="nome" th:field="*{nome}" placeholder="Insira seu nome" required class="form-input">  
 
@@ -49,7 +49,8 @@
 
                 <label for="senha" class="form-label">Senha:</label>
                 <input type="password" id="senha" th:field="*{senha}" placeholder="Sua senha incrível" required class="form-input"> 
-                
+                <p th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}" style="color: red;"></p>
+
                 <button type="submit" value="Cadastro" class="form-button">Cadastrar</button>
             </form> 
         </fieldset>

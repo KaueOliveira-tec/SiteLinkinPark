@@ -38,7 +38,11 @@ public class UsuarioController {
     }
 
     @PostMapping("/usuario")
-    public String cadastrarUsuario(@Valid @ModelAttribute Usuario usuario, BindingResult bindingResult, Model model) {
+    public String cadastrarUsuario(
+            @Valid @ModelAttribute Usuario usuario, 
+            BindingResult bindingResult, 
+            Model model) {
+                
         if (bindingResult.hasErrors()) {
             model.addAttribute("usuario", usuario);
             return "form_user";
