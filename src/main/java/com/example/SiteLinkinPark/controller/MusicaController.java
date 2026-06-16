@@ -10,13 +10,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import jakarta.validation.Valid;
 
 import com.example.SiteLinkinPark.model.Musica;
 import com.example.SiteLinkinPark.model.MusicaService;
@@ -53,26 +50,34 @@ public class MusicaController {
     }
 
     @GetMapping("/admin/musicas/nova")
-    public String formCadastrarMusica(Model model) {
-        if (!model.containsAttribute("musica")) {
-            model.addAttribute("musica", new Musica());
-        }
+    public String formCadastrarMusica() {
         return "admin_musica_form";
     }
 
     @PostMapping("/admin/musicas")
-    public String cadastrarMusica(
-            @Valid @ModelAttribute("musica") Musica musica,
-            BindingResult result,
+    public String cadastrarMusicasEmLote(
+            @RequestParam String album,
+            @RequestParam String artista,
+            @RequestParam String titulos,
             RedirectAttributes redirectAttributes) {
 
-        if (result.hasErrors()) {
-            return "admin_musica_form";
-        }
+        try {
+            int totalCadastrado = musicaService.cadastrarMusicasEmLote(album, artista, titulos);
 
-        musicaService.cadastrarMusica(musica);
-        redirectAttributes.addFlashAttribute("success", "Música cadastrada com sucesso!");
-        return "redirect:/musicas";
+            if (totalCadastrado == 1) {
+                redirectAttributes.addFlashAttribute("success", "1 música cadastrada com sucesso!");
+            } else {
+                redirectAttributes.addFlashAttribute("success", totalCadastrado + " músicas cadastradas com sucesso!");
+            }
+
+            return "redirect:/musicas";
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("erro", e.getMessage());
+            redirectAttributes.addFlashAttribute("album", album);
+            redirectAttributes.addFlashAttribute("artista", artista);
+            redirectAttributes.addFlashAttribute("titulos", titulos);
+            return "redirect:/admin/musicas/nova";
+        }
     }
 
 }

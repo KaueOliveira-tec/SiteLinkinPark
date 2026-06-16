@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/index.css}">
     <script th:src="@{/js/script.js}"></script>
-    <title>Cadastrar Música</title>
+    <title>Cadastrar Músicas</title>
 </head>
 <body>
     <header class="header">
         <img th:src="@{/img/logo-hybrid-theory.png}" class="header__logo" alt="Logo do álbum Hybrid Theory da banda Linkin Park">
-        <h1 class="header__title">Cadastrar Música</h1>
+        <h1 class="header__title">Cadastrar Músicas</h1>
         <div class="header-nav">
             <nav class="navbar">
                 <ul class="navbar__list">
@@ -32,23 +32,37 @@
 
     <main>
         <div class="content-musicas">
-            <h1>Nova Música</h1>
+            <h1>Novas Músicas</h1>
 
             <section class="content-section">
-                <form class="playlist-form" th:action="@{/admin/musicas}" th:object="${musica}" method="post">
-                    <label for="titulo" class="form-label">Título:</label>
-                    <input type="text" id="titulo" th:field="*{titulo}" placeholder="Ex: In the End" required class="form-input">
-                    <p th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}" class="login-error"></p>
+                <form class="playlist-form" th:action="@{/admin/musicas}" method="post">
+                    <div th:if="${erro}" class="login-error">
+                        <p th:text="${erro}"></p>
+                    </div>
 
                     <label for="album" class="form-label">Álbum:</label>
-                    <input type="text" id="album" th:field="*{album}" placeholder="Ex: Hybrid Theory" class="form-input">
-                    <p th:if="${#fields.hasErrors('album')}" th:errors="*{album}" class="login-error"></p>
+                    <input type="text" id="album" name="album" th:value="${album}" placeholder="Ex: Hybrid Theory" required class="form-input">
 
                     <label for="artista" class="form-label">Artista:</label>
-                    <input type="text" id="artista" th:field="*{artista}" placeholder="Ex: Linkin Park" required class="form-input">
-                    <p th:if="${#fields.hasErrors('artista')}" th:errors="*{artista}" class="login-error"></p>
+                    <input type="text" id="artista" name="artista" th:value="${artista}" placeholder="Ex: Linkin Park" required class="form-input">
 
-                    <button type="submit" class="form-button">Cadastrar música</button>
+                    <label for="titulos" class="form-label">Músicas:</label>
+                    <textarea id="titulos"
+                              name="titulos"
+                              rows="18"
+                              required
+                              class="form-input"
+                              placeholder="Digite uma música por linha. Ex:
+                                           Papercut
+                                           One Step Closer
+                                           With You"
+                              th:text="${titulos}"></textarea>
+
+                    <p class="form-label">
+                        Informe o álbum e o artista apenas uma vez. Depois cole uma ou várias músicas, uma por linha.
+                    </p>
+
+                    <button type="submit" class="form-button">Cadastrar músicas</button>
                     <a th:href="@{/musicas}" class="form-button">Cancelar</a>
                 </form>
             </section>
