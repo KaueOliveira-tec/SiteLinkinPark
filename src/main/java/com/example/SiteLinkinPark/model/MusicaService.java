@@ -14,4 +14,8 @@ public class MusicaService {
     public List<Musica> listarMusicas() {
         return musicaDAO.listarMusicas();
     }
+
+    public void cadastrarMusica(Musica musica) {
+        musicaDAO.cadastrarMusica(musica);
+    }
 }

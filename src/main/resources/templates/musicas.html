@@ -48,6 +48,7 @@
             <div sec:authorize="isAuthenticated()">
                 <section class="content-section">
                     <a th:href="@{/playlists}" class="form-button">Ver minhas playlists</a>
+                    <a sec:authorize="hasRole('ADMIN')" th:href="@{/admin/musicas/nova}" class="form-button">Cadastrar música</a>
                 </section>        
             </div>
 

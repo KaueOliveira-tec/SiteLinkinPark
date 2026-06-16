@@ -29,6 +29,24 @@ public class MusicaDAO {
         jdbc = new JdbcTemplate(dataSource);
     }
 
+
+    public void cadastrarMusica(Musica musica) {
+        try {
+            String sql = "INSERT INTO musica(id, titulo, album, artista) VALUES (?, ?, ?, ?)";
+            jdbc.update(
+                sql,
+                java.util.UUID.randomUUID(),
+                musica.getTitulo(),
+                musica.getAlbum(),
+                musica.getArtista()
+            );
+            logger.info("Música cadastrada com sucesso: {}", musica.getTitulo());
+        } catch (Exception e) {
+            logger.error("Erro ao cadastrar música: {}", musica.getTitulo(), e);
+            throw new RuntimeException("Erro ao cadastrar música", e);
+        }
+    }
+
     public List<Musica> listarMusicas() {
         String sql = "SELECT * FROM musica ORDER BY album, titulo";
         List<Map<String, Object>> registros = jdbc.queryForList(sql);

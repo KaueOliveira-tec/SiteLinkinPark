@@ -10,7 +10,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import jakarta.validation.Valid;
 
 import com.example.SiteLinkinPark.model.Musica;
 import com.example.SiteLinkinPark.model.MusicaService;
@@ -45,4 +51,28 @@ public class MusicaController {
         }
         return "musicas";
     }
+
+    @GetMapping("/admin/musicas/nova")
+    public String formCadastrarMusica(Model model) {
+        if (!model.containsAttribute("musica")) {
+            model.addAttribute("musica", new Musica());
+        }
+        return "admin_musica_form";
+    }
+
+    @PostMapping("/admin/musicas")
+    public String cadastrarMusica(
+            @Valid @ModelAttribute("musica") Musica musica,
+            BindingResult result,
+            RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            return "admin_musica_form";
+        }
+
+        musicaService.cadastrarMusica(musica);
+        redirectAttributes.addFlashAttribute("success", "Música cadastrada com sucesso!");
+        return "redirect:/musicas";
+    }
+
 }

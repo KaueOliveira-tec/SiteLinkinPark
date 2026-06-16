@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <script th:src="@{/js/script.js}"></script>
+    <title>Cadastrar Música</title>
+</head>
+<body>
+    <header class="header">
+        <img th:src="@{/img/logo-hybrid-theory.png}" class="header__logo" alt="Logo do álbum Hybrid Theory da banda Linkin Park">
+        <h1 class="header__title">Cadastrar Música</h1>
+        <div class="header-nav">
+            <nav class="navbar">
+                <ul class="navbar__list">
+                    <li><a th:href="@{/}" class="navbar__link">Home</a></li>
+                    <li><a th:href="@{/musicas}" class="navbar__link">Músicas</a></li>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" class="navbar__link">Minha Conta</a>
+                        <div class="dropdown__content">
+                            <div sec:authorize="isAuthenticated()">
+                                <a th:href="@{/perfil}" class="dropdown__link">Ver Perfil</a>
+                                <a th:href="@{/logout}" style="color: #ff4d4d;" class="dropdown__link">Sair</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="content-musicas">
+            <h1>Nova Música</h1>
+
+            <section class="content-section">
+                <form class="playlist-form" th:action="@{/admin/musicas}" th:object="${musica}" method="post">
+                    <label for="titulo" class="form-label">Título:</label>
+                    <input type="text" id="titulo" th:field="*{titulo}" placeholder="Ex: In the End" required class="form-input">
+                    <p th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}" class="login-error"></p>
+
+                    <label for="album" class="form-label">Álbum:</label>
+                    <input type="text" id="album" th:field="*{album}" placeholder="Ex: Hybrid Theory" class="form-input">
+                    <p th:if="${#fields.hasErrors('album')}" th:errors="*{album}" class="login-error"></p>
+
+                    <label for="artista" class="form-label">Artista:</label>
+                    <input type="text" id="artista" th:field="*{artista}" placeholder="Ex: Linkin Park" required class="form-input">
+                    <p th:if="${#fields.hasErrors('artista')}" th:errors="*{artista}" class="login-error"></p>
+
+                    <button type="submit" class="form-button">Cadastrar música</button>
+                    <a th:href="@{/musicas}" class="form-button">Cancelar</a>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <a href="#" class="voltar--button" title="Voltar ao topo" onclick="scrollToTop(event)">↑</a>
+
+    <footer id="footer">
+        <p>Projeto acadêmico - Desenvolvimento para Servidores II | Fatec Rubens Lara | Sistemas para Internet</p>
+        <p>Feito por: Kauê de Oliveira Martins © 2026</p>
+    </footer>
+</body>
+</html>
