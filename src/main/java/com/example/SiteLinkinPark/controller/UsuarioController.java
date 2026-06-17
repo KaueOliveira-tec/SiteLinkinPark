@@ -88,6 +88,7 @@ public class UsuarioController {
         if (user == null) {
             return "redirect:/login";
         }
+        user.setSenha("");
         model.addAttribute("usuario", user);
         return "editar_usuario";
     }
@@ -98,25 +99,35 @@ public class UsuarioController {
                                    @RequestParam String emailAtual,
                                    @RequestParam String senhaAtual,
                                    HttpSession session,
+                                   Principal principal,
                                    Model model) {
+
+        if(principal == null) {
+            return "redirect:/login";
+        }
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("usuario", usuario);
             return "editar_usuario";
         }
 
+        String emailLogado = principal.getName();
+
         try {
-            logger.info("Atualizando usuário com email: {}", emailAtual);
-            boolean atualizado = usuarioService.atualizarUsuario(usuario, emailAtual, senhaAtual);
+            logger.info("Atualizando usuário logado com email: {}", emailLogado);
+            boolean atualizado = usuarioService.atualizarUsuario(usuario, emailLogado, senhaAtual);
             if (atualizado) {
-                logger.info("Usuário atualizado com sucesso: {}", emailAtual);
-                return "form_sucesso";
+                logger.info("Usuário atualizado com sucesso: {}", emailLogado);
+                session.invalidate();
+                return "redirect:/login?atualizado=true";
             }
-            logger.warn("Falha ao atualizar usuário: {} - Credenciais inválidas", emailAtual);
-            model.addAttribute("erro", "Atualização falhou. Verifique o e-mail e senha atuais e tente novamente.");
+
+            logger.warn("Falha ao atualizar usuário: {} - senha atual inválida", emailLogado);
+            model.addAttribute("erro", "Senha atual incorreta.");
             model.addAttribute("usuario", usuario);
             return "editar_usuario";
         } catch (Exception e) {
-            logger.error("Erro ao atualizar usuário: {}", emailAtual, e);
+            logger.error("Erro ao atualizar usuário: {}", emailLogado, e);
             model.addAttribute("erro", e.getMessage());
             model.addAttribute("usuario", usuario);
             return "editar_usuario";
@@ -124,42 +135,43 @@ public class UsuarioController {
     }
 
     @PostMapping("/usuario/excluir")
-    public String excluirUsuarioConta(@RequestParam String email,
-                                 @RequestParam String senha,
-                                 HttpSession session,
-                                 Principal principal,
-                                 Model model) {
+     public String excluirUsuarioConta(@RequestParam String senha,
+                                      HttpSession session,
+                                      Principal principal,
+                                      Model model) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+
+        String emailLogado = principal.getName();
+
         try {
-            logger.info("Iniciando exclusão de conta para: {}", email);
-            boolean excluido = usuarioService.excluirUsuario(email, senha);
+            logger.info("Iniciando exclusão de conta para: {}", emailLogado);
+            boolean excluido = usuarioService.excluirUsuario(emailLogado, senha);
             if (excluido) {
-                logger.info("Conta excluída com sucesso: {}", email);
+                logger.info("Conta excluída com sucesso: {}", emailLogado);
                 session.invalidate();
-                return "form_sucesso";
+                return "redirect:/login?contaExcluida=true";
             }
-            logger.warn("Falha ao excluir conta: {} - Credenciais inválidas", email);
-            if (principal != null) {
-                Usuario user = usuarioDAO.buscarPorEmail(principal.getName());
-                if (user != null) {
-                    model.addAttribute("nomeUsuario", user.getNome());
-                    model.addAttribute("emailUsuario", user.getEmail());
-                    model.addAttribute("uuid", user.getId());
-                }
-            }
-            model.addAttribute("erro", "Falha ao excluir conta. Verifique a senha e tente novamente.");
+
+            logger.warn("Falha ao excluir conta: {} - senha inválida", emailLogado);
+            carregarDadosPerfil(emailLogado, model);
+            model.addAttribute("erro", "Senha incorreta.");
             return "perfil";
         } catch (Exception e) {
             logger.error("Erro ao excluir usuário", e);
-            if (principal != null) {
-                Usuario user = usuarioDAO.buscarPorEmail(principal.getName());
-                if (user != null) {
-                    model.addAttribute("nomeUsuario", user.getNome());
-                    model.addAttribute("emailUsuario", user.getEmail());
-                    model.addAttribute("uuid", user.getId());
-                }
-            }
+            carregarDadosPerfil(emailLogado, model);
             model.addAttribute("erro", "Erro ao processar exclusão. Tente novamente.");
             return "perfil";
+        }
+    }
+
+    private void carregarDadosPerfil(String email, Model model) {
+        Usuario user = usuarioDAO.buscarPorEmail(email);
+        if (user != null) {
+            model.addAttribute("nomeUsuario", user.getNome());
+            model.addAttribute("emailUsuario", user.getEmail());
+            model.addAttribute("uuid", user.getId());
         }
     }
 }

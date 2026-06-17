@@ -52,8 +52,6 @@
                 </button>
 
                 <form th:action="@{/usuario/excluir}" method="post" onsubmit="return confirm('Tem certeza que deseja excluir sua conta?');">
-                    <input type="hidden" name="email" th:value="${emailUsuario}"/>
-
                     <label for="senhaExcluir">Senha atual</label>
                     <input id="senhaExcluir" class="form-input" type="password" name="senha" required />
                     
