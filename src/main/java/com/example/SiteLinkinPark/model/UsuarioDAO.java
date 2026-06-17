@@ -1,5 +1,7 @@
 package com.example.SiteLinkinPark.model;
 
+import java.util.UUID;
+
 import javax.sql.DataSource;
 
 import org.slf4j.Logger;
@@ -59,7 +61,8 @@ public class UsuarioDAO {
 	public boolean atualizarUsuarioPorId(Usuario usuario, Object id) {
 		try {
 			String sql = "UPDATE usuario SET nome = ?, email = ?, senha = ? WHERE id = ?";
-			int rows = jdbc.update(sql, usuario.getNome(), usuario.getEmail(), usuario.getSenha(), id);
+			UUID uuid = id instanceof UUID ? (UUID) id : UUID.fromString(id.toString());
+			int rows = jdbc.update(sql, usuario.getNome(), usuario.getEmail(), usuario.getSenha(), uuid);
 			logger.info("Usuário atualizado por ID: {} - Linhas afetadas: {}", id, rows);
 			return rows > 0;
 		} catch (Exception e) {
@@ -71,7 +74,8 @@ public class UsuarioDAO {
 	public boolean excluirUsuarioPorId(Object id) {
 		try {
 			String sql = "DELETE FROM usuario WHERE id = ?";
-			int rows = jdbc.update(sql, id);
+			UUID uuid = id instanceof UUID ? (UUID) id : UUID.fromString(id.toString());
+			int rows = jdbc.update(sql, uuid);
 			logger.info("Usuário deletado por ID: {} - Linhas afetadas: {}", id, rows);
 			return rows > 0;
 		} catch (Exception e) {
@@ -80,10 +84,8 @@ public class UsuarioDAO {
 		}
 	}
 
-	// Métodos legados mantidos para compatibilidade (deprecated)
 	@Deprecated
 	public Usuario verificarLogin(String email, String senha) {
-		// Não mais utilizado - autenticação agora é feita via Spring Security
 		return buscarPorEmail(email);
 	}
 

@@ -96,7 +96,6 @@ public class UsuarioController {
     @PostMapping("/usuario/atualizar")
     public String atualizarUsuario(@Valid @ModelAttribute Usuario usuario,
                                    BindingResult bindingResult,
-                                   @RequestParam String emailAtual,
                                    @RequestParam String senhaAtual,
                                    HttpSession session,
                                    Principal principal,
@@ -111,11 +110,11 @@ public class UsuarioController {
             return "editar_usuario";
         }
 
-        String emailLogado = principal.getName();
-
         try {
+            String emailLogado = principal.getName();
             logger.info("Atualizando usuário logado com email: {}", emailLogado);
             boolean atualizado = usuarioService.atualizarUsuario(usuario, emailLogado, senhaAtual);
+
             if (atualizado) {
                 logger.info("Usuário atualizado com sucesso: {}", emailLogado);
                 session.invalidate();
@@ -126,8 +125,9 @@ public class UsuarioController {
             model.addAttribute("erro", "Senha atual incorreta.");
             model.addAttribute("usuario", usuario);
             return "editar_usuario";
-        } catch (Exception e) {
-            logger.error("Erro ao atualizar usuário: {}", emailLogado, e);
+        } 
+        catch (Exception e) {
+            logger.error("Erro ao atualizar usuário: {}", e);
             model.addAttribute("erro", e.getMessage());
             model.addAttribute("usuario", usuario);
             return "editar_usuario";
@@ -143,9 +143,8 @@ public class UsuarioController {
             return "redirect:/login";
         }
 
-        String emailLogado = principal.getName();
-
         try {
+            String emailLogado = principal.getName();
             logger.info("Iniciando exclusão de conta para: {}", emailLogado);
             boolean excluido = usuarioService.excluirUsuario(emailLogado, senha);
             if (excluido) {
@@ -153,25 +152,25 @@ public class UsuarioController {
                 session.invalidate();
                 return "redirect:/login?contaExcluida=true";
             }
-
             logger.warn("Falha ao excluir conta: {} - senha inválida", emailLogado);
-            carregarDadosPerfil(emailLogado, model);
+            Usuario user = usuarioDAO.buscarPorEmail(emailLogado);
+            if (user != null) {
+                model.addAttribute("nomeUsuario", user.getNome());
+                model.addAttribute("emailUsuario", user.getEmail());
+                model.addAttribute("uuid", user.getId());
+            }
             model.addAttribute("erro", "Senha incorreta.");
             return "perfil";
         } catch (Exception e) {
             logger.error("Erro ao excluir usuário", e);
-            carregarDadosPerfil(emailLogado, model);
+            Usuario user = usuarioDAO.buscarPorEmail(principal.getName());
+            if (user != null) {
+                model.addAttribute("nomeUsuario", user.getNome());
+                model.addAttribute("emailUsuario", user.getEmail());
+                model.addAttribute("uuid", user.getId());
+            }
             model.addAttribute("erro", "Erro ao processar exclusão. Tente novamente.");
             return "perfil";
-        }
-    }
-
-    private void carregarDadosPerfil(String email, Model model) {
-        Usuario user = usuarioDAO.buscarPorEmail(email);
-        if (user != null) {
-            model.addAttribute("nomeUsuario", user.getNome());
-            model.addAttribute("emailUsuario", user.getEmail());
-            model.addAttribute("uuid", user.getId());
         }
     }
 }
