@@ -40,9 +40,10 @@
         <section class="form-container" aria-labelledby="success-title" role="status">
             <div class="form-content">
                 <header id="success-title">
-                    <h1>Feito com sucesso!</h1>
+                    <h1 th:text="${titulo}">Feito com sucesso!</h1>
+                    <p th:text="${mensagem}">Operação realizada com sucesso.</p>
                 </header>
-                <button onclick="window.location.href='/'" class="form-button" aria-label="Voltar à página inicial">Retornar</button>
+                <a th:href="${urlRetorno}" class="form-button" th:text="${textoBotao}" aria-label="Retornar">Retornar</a>
             </div>
         </section>
     </main>

@@ -52,13 +52,44 @@ public class UsuarioController {
             logger.info("Cadastrando novo usuário com email: {}", usuario.getEmail());
             usuarioService.cadastroUsuario(usuario);
             logger.info("Cadastro bem-sucedido para: {}", usuario.getEmail());
-            return "redirect:/login?cadastro=true";
+            return "redirect:/form_sucesso?tipo=cadastro";
         } catch (Exception e) {
             logger.error("Erro ao cadastrar usuário com email: {}", usuario.getEmail(), e);
             model.addAttribute("erro", e.getMessage());
             model.addAttribute("usuario", usuario);
             return "form_user";
         }
+    }
+
+    @GetMapping("/form_sucesso")
+    public String exibirTelaSucesso(@RequestParam(required = false) String tipo, Model model) {
+        String titulo = "Feito com sucesso!";
+        String mensagem = "Operação realizada com sucesso.";
+        String urlRetorno = "/";
+        String textoBotao = "Retornar";
+
+        if ("cadastro".equals(tipo)) {
+            titulo = "Cadastro realizado com sucesso!";
+            mensagem = "Sua conta foi criada. Agora você já pode fazer login.";
+            urlRetorno = "/login";
+            textoBotao = "Ir para Login";
+        } else if ("atualizacao".equals(tipo)) {
+            titulo = "Perfil atualizado com sucesso!";
+            mensagem = "Suas informações foram atualizadas. Faça login novamente para continuar.";
+            urlRetorno = "/login";
+            textoBotao = "Ir para Login";
+        } else if ("exclusao".equals(tipo)) {
+            titulo = "Conta excluída com sucesso!";
+            mensagem = "Seu cadastro foi removido do sistema.";
+            urlRetorno = "/";
+            textoBotao = "Voltar à página inicial";
+        }
+
+        model.addAttribute("titulo", titulo);
+        model.addAttribute("mensagem", mensagem);
+        model.addAttribute("urlRetorno", urlRetorno);
+        model.addAttribute("textoBotao", textoBotao);
+        return "form_sucesso";
     }
 
     @GetMapping("/login")
@@ -118,7 +149,7 @@ public class UsuarioController {
             if (atualizado) {
                 logger.info("Usuário atualizado com sucesso: {}", emailLogado);
                 session.invalidate();
-                return "redirect:/login?atualizado=true";
+                return "redirect:/form_sucesso?tipo=atualizacao";
             }
 
             logger.warn("Falha ao atualizar usuário: {} - senha atual inválida", emailLogado);
@@ -150,7 +181,7 @@ public class UsuarioController {
             if (excluido) {
                 logger.info("Conta excluída com sucesso: {}", emailLogado);
                 session.invalidate();
-                return "redirect:/login?contaExcluida=true";
+                return "redirect:/form_sucesso?tipo=exclusao";
             }
             logger.warn("Falha ao excluir conta: {} - senha inválida", emailLogado);
             Usuario user = usuarioDAO.buscarPorEmail(emailLogado);
