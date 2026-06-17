@@ -53,17 +53,20 @@
                               required
                               class="form-input"
                               placeholder="Digite uma música por linha. Ex:
-                                           Papercut
-                                           One Step Closer
-                                           With You"
+                    Papercut
+                    One Step Closer
+                    With You"
                               th:text="${titulos}"></textarea>
 
                     <p class="form-label">
                         Informe o álbum e o artista apenas uma vez. Depois cole uma ou várias músicas, uma por linha.
                     </p>
 
+                <div class="form-actions">
                     <button type="submit" class="form-button">Cadastrar músicas</button>
-                    <a th:href="@{/musicas}" class="form-button">Cancelar</a>
+                    <a th:href="@{/musicas}" class="form-button" role="button">Cancelar</a>
+                </div>
+
                 </form>
             </section>
         </div>
