@@ -19,7 +19,6 @@ public class AdminBootstrap {
                 Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM usuario WHERE email = ?", Integer.class, "admin@linkinpark.com");
 
                 if (count == null || count == 0) {
-                    // A senha será encriptada pelo UsuarioService automaticamente
                     Usuario admin = new Usuario("Administrador", "admin@linkinpark.com", "admin123");
                     usuarioService.cadastroUsuario(admin);
                     System.out.println("  Usuário admin criado com sucesso!");

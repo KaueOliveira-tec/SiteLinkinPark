@@ -1,120 +1,287 @@
 # SiteLinkinPark - Linkin Park: De Fã para Fã
 
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.4-green.svg)](https://spring.io/projects/spring-boot)
+![Java](https://img.shields.io/badge/Java-21-orange)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.x-brightgreen)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue)
+![Thymeleaf](https://img.shields.io/badge/Thymeleaf-Template_Engine-green)
+![Spring Security](https://img.shields.io/badge/Spring_Security-Enabled-success)
+![Docker](https://img.shields.io/badge/Docker-Supported-2496ED)
+![License](https://img.shields.io/badge/License-Academic-lightgrey)
 
-## Descrição
+---
 
-Site acadêmico desenvolvido para a disciplina **Desenvolvimento para Servidores II** do curso **Sistemas para Internet** da **Fatec Rubens Lara**. 
+# 📋 Sumário
 
-O projeto é um site de fãs para a banda **Linkin Park**, apresentando informações sobre a história da banda, integrantes originais e atuais, biblioteca de músicas/álbuns, sistema de autenticação de usuários e playlists personalizadas.
+- Visão Geral
+- Funcionalidades
+- Arquitetura
+- Modelo de Camadas
+- Tecnologias
+- Estrutura do Projeto
+- Segurança
+- Banco de Dados
+- Instalação
+- Execução
+- Docker
+- Roadmap
 
+---
+
+# 🚀 Visão Geral
+
+O SiteLinkinPark é um projeto acadêmico desenvolvido para a disciplina **Desenvolvimento para Servidores II** do curso **Sistemas para Internet** da **Fatec Rubens Lara**.
+
+O objetivo é disponibilizar uma plataforma para fãs da banda Linkin Park contendo:
+
+- Informações sobre integrantes.
+- Catálogo de músicas.
+- Gerenciamento de playlists.
+- Cadastro e autenticação de usuários.
+- Área administrativa.
+
+---
 
 ## Funcionalidades
+
+## Área Pública
+
 - Página inicial com biografia da banda Linkin Park.
-- Páginas de integrantes originais e atuais.
-- **Página de músicas e álbuns** com filtragem por álbum.
-- **Sistema de autenticação** com login e logout.
-- **Gerenciamento de conta**: cadastro, visualização de perfil, edição de dados e exclusão de conta.
-- **Playlists personalizadas**: criar, editar, visualizar e deletar playlists com seleção de múltiplas músicas.
-- **Sessão de usuário**: mantém dados do usuário logado na sessão.
-- Navegação responsiva com assets estáticos (CSS, JS, imagens).
+- Integrantes originais.
+- Integrantes atuais.
+- Navegação responsiva.
 
-## INSERTs de teste
+## Usuários Autenticados
 
-Usuários de teste podem ser criados através do formulário de cadastro em `/form_user`.
+- Cadastro.
+- Login.
+- Logout.
+- Perfil do usuário.
+- Atualização de dados.
+- Exclusão de conta.
+- Criação de playlists.
+- Edição de playlists.
+- Remoção de músicas.
+- Exclusão de playlists.
 
+## Administração
 
-## Tech Stack
-- **Backend**: Spring Boot 4.0.4 (WebMVC, Data JDBC, JPA/Hibernate, Session JDBC, Validation, Security).
-- **Frontend**: Thymeleaf templates, CSS, JavaScript.
-- **Database**: PostgreSQL (JDBC driver).
-- **Build**: Maven (wrapper: mvnw).
-- **Java**: 21.
+- Controle de acesso por Role.
+- Cadastro de músicas.
+- Bootstrap de administrador.
 
-## Pré-requisitos
-- **Java 21** ou superior instalado.
-- **PostgreSQL** rodando em `localhost:5432` com:
-  - Database: `nome que você deu ao seu banco de dados dentro do PostgreSQL`
-  - Usuário: `postgres`
-  - Senha: `senha que você usou para conectar o servidor do banco de dados dentro do PostgreSQL`
-- (O schema é criado automaticamente via `schema-postgresql.sql` e Hibernate).
+---
 
-## Instalação e Execução
-1. Clone o repositório:
-   ```
-   git clone <repo-url>
-   cd nomeDoBancoDeDados
-   ```
-2. Inicie o PostgreSQL e crie o banco.
-3. Execute o projeto
-4. Acesse em: [http://localhost:8080](http://localhost:8080)
+# 🏗 Arquitetura
 
-## Estrutura do Projeto
-```
-SiteLinkinPark/
-├── pom.xml
-├── src/
-│   ├── main/
-│   │   ├── java/com/example/SiteLinkinPark/
-│   │   │   ├── controller/
-│   │   │   │   ├── MenuController.java
-│   │   │   │   ├── UsuarioController.java
-│   │   │   │   ├── MusicaController.java
-│   │   │   │   └── PlaylistController.java
-│   │   │   ├── model/
-│   │   │   │   ├── Usuario.java
-│   │   │   │   ├── UsuarioDAO.java
-│   │   │   │   ├── UsuarioService.java
-│   │   │   │   ├── Musica.java
-│   │   │   │   ├── MusicaDAO.java
-│   │   │   │   ├── MusicaService.java
-│   │   │   │   ├── Playlist.java
-│   │   │   │   ├── PlaylistDAO.java
-│   │   │   │   └── PlaylistService.java
-│   │   │   └── config/
-│   │   └── resources/
-│   │       ├── application.yaml
-│   │       ├── schema-postgresql.sql
-│   │       ├── static/(css/, img/, js/)
-│   │       └── templates/(html templates)
-│   └── test/
+## Arquitetura Geral
+
+```mermaid
+flowchart LR
+
+A[Cliente Browser]
+B[Spring MVC Controllers]
+C[Services]
+D[DAOs / Repositories]
+E[(PostgreSQL)]
+
+A --> B
+B --> C
+C --> D
+D --> E
 ```
 
-## Rotas Principais
-| Rota                  | Método | Descrição              |
-|-----------------------|--------|------------------------|
-| `/`                   | GET    | Página inicial (biografia) |
-| `/musicas`            | GET    | Músicas e álbuns       |
-| `/integrantes_originais` | GET | Integrantes originais |
-| `/integrantes_atuais` | GET    | Integrantes atuais     |
-| `/form_user`          | GET    | Formulário de cadastro |
-| `/usuario`            | POST   | Processa cadastro      |
-| `/login`              | GET    | Página de login        |
-| `/efetuarLogin`       | POST   | Autentica usuário      |
-| `/perfil`             | GET    | Perfil do usuário logado |
-| `/editar_usuario`     | GET    | Formulário de edição   |
-| `/usuario/atualizar`  | POST   | Atualiza dados do usuário |
-| `/usuario/excluir`    | POST   | Exclui conta do usuário |
-| `/logout`             | GET    | Encerra sessão         |
-| `/musicas`            | POST   | Cria playlist          |
-| `/playlists`          | GET    | Lista playlists do usuário |
-| `/playlist/{id}`      | GET    | Detalhes da playlist   |
-| `/playlist/{id}/atualizar` | POST | Atualiza playlist |
-| `/playlist/{id}/musica/{musicaId}/remover` | POST | Remove música da playlist |
-| `/playlist/{id}/deletar` | POST | Deleta playlist |
+---
 
-## Autor
-**Kauê de Oliveira Martins**  
-Projeto acadêmico - Fatec Rubens Lara.
+## Fluxo de Autenticação
 
-## Próximos Passos
-- Melhorias na interface de usuário (UI/UX refinement).
-- Adicionar funcionalidades de busca e recomendação de músicas.
-- Implementar compartilhamento de playlists entre usuários.
-- Adicionar sistema de avaliação/rating de músicas.
-- Testes automatizados (unit e integração).
-- Melhorias de segurança (senhas hash, proteção contra ataques).
-- Deploy em ambiente de produção.
+```mermaid
+sequenceDiagram
 
-## Licença
-Projeto acadêmico - sem licença comercial.
+participant U as Usuário
+participant S as Spring Security
+participant DB as PostgreSQL
+
+U->>S: Login
+S->>DB: Buscar usuário
+DB-->>S: Dados do usuário
+S-->>U: Sessão autenticada
+```
+
+---
+
+## Camadas da Aplicação
+
+```mermaid
+flowchart TB
+
+Controller[Controllers]
+Service[Services]
+DAO[DAOs]
+DB[(Database)]
+
+Controller --> Service
+Service --> DAO
+DAO --> DB
+```
+
+---
+
+# 🧰 Tecnologias Utilizadas
+
+## Backend
+
+- Java 21
+- Spring Boot
+- Spring MVC
+- Spring Security
+- Spring Validation
+- Spring Session JDBC
+
+## Frontend
+
+- Thymeleaf
+- Bootstrap
+- HTML5
+- CSS3
+
+## Banco
+
+- PostgreSQL
+
+## DevOps
+
+- Docker
+- Maven Wrapper
+
+---
+
+# 📂 Estrutura do Projeto
+
+```text
+src/main/java/com/example/SiteLinkinPark
+│
+├── config
+│   ├── SecurityConfig
+│   ├── CustomUserDetailsService
+│   ├── AdminBootstrap
+│   └── GlobalExceptionHandler
+│
+├── controller
+│   ├── MenuController
+│   ├── UsuarioController
+│   ├── MusicaController
+│   └── PlaylistController
+│
+├── model
+│   ├── Usuario
+│   ├── Musica
+│   ├── Playlist
+│   ├── DAO
+│   └── Service
+│
+└── SiteLinkinParkApplication
+```
+
+---
+
+# 🔒 Segurança
+
+O projeto utiliza Spring Security com:
+
+- BCrypt Password Encoder.
+- Controle de acesso por Roles.
+- Sessões JDBC.
+- CustomUserDetailsService.
+- Rotas administrativas protegidas.
+
+### Perfis
+
+| Perfil | Permissões |
+|----------|------------|
+| USER | Operações comuns |
+| ADMIN | Gerenciamento de músicas |
+
+---
+
+# 🗄 Banco de Dados
+
+Entidades principais:
+
+```mermaid
+erDiagram
+
+USUARIO ||--o{ PLAYLIST : possui
+PLAYLIST }o--o{ MUSICA : contem
+
+USUARIO {
+ Long id
+ String nome
+ String email
+ String senha
+}
+
+PLAYLIST {
+ Long id
+ String nome
+}
+
+MUSICA {
+ Long id
+ String titulo
+ String album
+}
+```
+
+---
+
+# ⚙️ Configuração
+
+Configure as credenciais do banco por variáveis de ambiente.
+
+```properties
+spring.datasource.url=${DATABASE_URL}
+spring.datasource.username=${DATABASE_USERNAME}
+spring.datasource.password=${DATABASE_PASSWORD}
+```
+---
+
+# ▶️ Execução
+
+## Rodar localmente
+
+```bash
+./mvnw spring-boot:run
+```
+
+## Gerar build
+
+```bash
+./mvnw clean package
+```
+
+---
+
+# 📌 Estado Atual
+
+## Concluído
+
+- Sistema de autenticação.
+- CRUD de usuários.
+- CRUD de playlists.
+- Catálogo de músicas.
+- Área administrativa.
+- PostgreSQL.
+- Thymeleaf.
+- Docker.
+
+---
+
+# 👨‍💻 Autor
+**Kauê de Oliveira Martins**
+Projeto acadêmico desenvolvido para fins educacionais.
+
+---
+
+## 📄 Licença
+
+Uso acadêmico e educacional.
